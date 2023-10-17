@@ -24,16 +24,15 @@ And the code architecture is mainly inspired by the default [Nest.js](https://ne
   ```
 - With Docker
 
-```
-sudo docker compose up
-```
+  ```
+  sudo docker compose up
+  ```
 
-or
+  or
 
-```
-sudo docker compose up -d
-```
-
+  ```
+  sudo docker compose up -d
+  ```
 
 
 **Elikem Medehou** [![Twitter Follow](https://img.shields.io/twitter/follow/juniormedehou_?label=Follow&style=social)](https://twitter.com/juniormedehou_)
