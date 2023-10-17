@@ -1,0 +1,42 @@
+{
+  "name": "canal-olympia-scrapping-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "prestart": "ts-node src/swagger.ts",
+    "start": "export NODE_OPTIONS='--trace-deprecation --abort-on-uncaught-exception' && export NODE_ENV=development && nodemon --exec ts-node ./bin/www.ts",
+    "dev": "nodemon --exec ts-node ./bin/www.ts",
+    "build": "sh etc/build.sh",
+    "prod": "ts-node src/swagger.ts && ts-node ./bin/www.ts",
+    "docs": "ts-node src/swagger.ts"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "log4js": "latest",
+    "module-alias": "^2.2.2",
+    "morgan": "~1.9.1",
+    "puppeteer": "^21.3.8",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/debug": "^4.1.7",
+    "@types/express": "^4.17.13",
+    "@types/http-errors": "^1.8.1",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^16.10.2",
+    "nodemon": "^2.0.15",
+    "swagger-autogen": "^2.23.6",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  },
+  "_moduleAliases": {
+    "@": "./src"
+  }
+}
