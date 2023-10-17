@@ -15,11 +15,13 @@
     "debug": "~2.6.9",
     "dotenv": "^16.0.0",
     "express": "~4.16.1",
+    "html-to-text": "^9.0.5",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "log4js": "latest",
     "module-alias": "^2.2.2",
     "morgan": "~1.9.1",
+    "node-html-parser": "^6.1.10",
     "puppeteer": "^21.3.8",
     "rimraf": "^3.0.2",
     "swagger-ui-express": "^5.0.0"
