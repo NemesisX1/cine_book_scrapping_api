@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prestart": "ts-node src/swagger.ts",
-    "start": "export NODE_OPTIONS='--trace-deprecation --abort-on-uncaught-exception' && export NODE_ENV=development",
+    "start": "export NODE_OPTIONS='--trace-deprecation --abort-on-uncaught-exception' && export NODE_ENV=development && ts-node ./bin/www.ts",
     "dev": "nodemon --exec ts-node ./bin/www.ts",
     "build": "sh etc/build.sh",
     "prod": "ts-node src/swagger.ts && ts-node ./bin/www.ts",
@@ -21,7 +21,8 @@
     "module-alias": "^2.2.2",
     "morgan": "~1.9.1",
     "puppeteer": "^21.3.8",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.0",
@@ -31,6 +32,7 @@
     "@types/http-errors": "^1.8.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.10.2",
+    "@types/swagger-ui-express": "^4.1.4",
     "nodemon": "^2.0.15",
     "swagger-autogen": "^2.23.6",
     "ts-node": "^10.2.1",

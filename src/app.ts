@@ -1,5 +1,6 @@
 import createError from 'http-errors';
-
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './docs/swagger-output.json';
 import express, { RequestHandler, ErrorRequestHandler  } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -33,6 +34,7 @@ class App {
   private routerSetup() {
     this.app.use('/', indexRouter);
     this.app.use('/users', usersRouter);
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
   }
 
   private errorHandler() {
