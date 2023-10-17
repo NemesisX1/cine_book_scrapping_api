@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+ 
+  canal_olympia_scrapper_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: canal-olympia-scrapper-backend-container
+    logging:
+      driver: json-file
+    restart: always
+    ports:
+      - "3100:3100"
+    environment:
+      NODE_ENV: production
+    env_file:
+      - .env 

@@ -7,15 +7,15 @@ export function bootstrapLogger() {
   const date = new Date();
   const strDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
-  // configure({
-  //   appenders: {
-  //     out: { type: 'stdout' },
-  //     app: { type: 'file', filename: path.join(__dirname, '..', 'logs', `${strDate}.log`) }
-  //   },
-  //   categories: {
-  //     default: { appenders: ['out', 'app'], level: 'debug' }
-  //   }
-  // });
+  configure({
+    appenders: {
+      out: { type: 'stdout' },
+      app: { type: 'file', filename: path.join(__dirname, '..', 'logs', `${strDate}.log`) }
+    },
+    categories: {
+      default: { appenders: ['out', 'app'], level: 'debug' }
+    }
+  });
 
   const logger = log4js.getLogger();
   logger.level = 'debug';
