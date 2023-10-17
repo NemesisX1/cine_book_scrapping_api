@@ -127,6 +127,8 @@ export default class ScrappingService implements BaseService {
         const genre = htmlRoot.querySelector('div.movie-top-container-cover-content > p.genres > span')?.textContent.split(':').pop()?.trim();
         const date = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.date')?.textContent.split(':').pop()?.trim();
         const duration = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.time')?.textContent.split(':').pop()?.trim();
+
+        /// TODO: find a way to get the remaining text
         const brief = htmlRoot.querySelector('div.movie-top-container-content-wrapper > p')?.textContent;
         const trailerUrl = htmlRoot.querySelector('div.wrapper > div.movie > iframe')?.rawAttributes.src;
 
