@@ -13,7 +13,6 @@ npx ts-express
 
 And the code architecture is mainly inspired by the default [Nest.js](https://nestjs.com/) one.
 
-
 > ### 🚀 Deployment
 
 - With npm
@@ -33,6 +32,5 @@ And the code architecture is mainly inspired by the default [Nest.js](https://ne
   ```
   sudo docker compose up -d
   ```
-
 
 **Elikem Medehou** [![Twitter Follow](https://img.shields.io/twitter/follow/juniormedehou_?label=Follow&style=social)](https://twitter.com/juniormedehou_)
