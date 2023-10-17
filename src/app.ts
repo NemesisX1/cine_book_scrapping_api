@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
 import indexRouter from './routes/index';
-import usersRouter from './routes/users';
+import theatersRouter from './routes/theaters';
 
 class App {
   public app: express.Application;
@@ -32,9 +32,11 @@ class App {
   }
 
   private routerSetup() {
+
     this.app.use('/', indexRouter);
-    this.app.use('/users', usersRouter);
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+    this.app.use('/theaters', theatersRouter);
+  
   }
 
   private errorHandler() {

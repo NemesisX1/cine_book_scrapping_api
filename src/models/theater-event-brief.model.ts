@@ -3,7 +3,7 @@ export default interface TheaterEventBriefModel {
     hour: string,
     language: string,
     title: string,
-    img: string,
-    url: string,
+    img: string | null,
+    url: string | null,
     slug: string,
 }

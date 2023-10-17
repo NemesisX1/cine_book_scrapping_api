@@ -1,10 +1,11 @@
 export default interface TheaterEventModel {
+ 
     title: string,
-    type: string,
+    slug?: string,
+    genre: string,
     duration: string,
     releaseDate: string,
-    diffusionDates: string[],
-    description: string,
+    descriptionBrief: string,
     trailerLink: string,
-    theater: string,
+
 }

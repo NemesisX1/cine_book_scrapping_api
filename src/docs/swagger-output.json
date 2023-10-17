@@ -5,17 +5,6 @@
     "title": "Canal Olympia Scrapping REST API",
     "description": ""
   },
-  "servers": [
-    {
-      "url": "http://157.230.241.85:3000/"
-    }
-  ],
-  "tags": [
-    {
-      "name": "",
-      "description": ""
-    }
-  ],
   "securityDefinitions": {},
   "paths": {
     "/": {
@@ -28,12 +17,105 @@
         }
       }
     },
-    "/users/": {
+    "/theaters/names": {
       "get": {
+        "tags": [
+          "Theaters"
+        ],
         "description": "",
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/theaters/movies/{theater}": {
+      "get": {
+        "tags": [
+          "Theaters"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "theater",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/theaters/movie-infos/{slug}": {
+      "get": {
+        "tags": [
+          "Theaters"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/theaters/movie-diffusion-infos/{slug}": {
+      "get": {
+        "tags": [
+          "Theaters"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }

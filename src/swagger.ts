@@ -1,5 +1,10 @@
+import { config } from 'dotenv';
 import path from 'path';
 import swaggerAutogen from 'swagger-autogen';
+
+config();
+
+console.log(process.env.BASE_API_URL);
 
 const doc = {
     info: {
@@ -7,18 +12,10 @@ const doc = {
         title: 'Canal Olympia Scrapping REST API',        // by default: 'REST API'
         description: '',  // by default: ''
     },
-    host: '157.230.241.85:3000',      // by default: 'localhost:3000'
     basePath: '/',  // by default: '/'
     schemes: [],   // by default: ['http']
     consumes: [],  // by default: ['application/json']
     produces: [],  // by default: ['application/json']
-    tags: [        // by default: empty Array
-        {
-            name: '',         // Tag name
-            description: '',  // Tag description
-        },
-        // { ... }
-    ],
     securityDefinitions: {},  // by default: empty object
     definitions: {},          // by default: empty object (Swagger 2.0)
     components: {}
@@ -30,4 +27,7 @@ const endpointsFiles = [
     path.join(__dirname, 'app.ts'),
 ];
 
-swaggerAutogen({openapi: '3.0.0'})(outputFile, endpointsFiles, doc);
+swaggerAutogen({openapi: '3.0.0'})(outputFile, endpointsFiles, {
+    ...doc,
+    host: process.env.BASE_API_URL
+});
