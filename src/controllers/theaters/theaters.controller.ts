@@ -1,7 +1,7 @@
 import { getLogger } from "log4js";
 import BaseController from "../abstracts/base.controller";
 import { Response } from "express";
-import ScrappingService from "@/services/scapping/scrapping.servive";
+import ScrappingService from "../../services/scapping/scrapping.servive";
 import {  StatusCodes } from "http-status-codes";
 
 export default class TheatersController implements BaseController {

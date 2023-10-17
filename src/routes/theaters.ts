@@ -1,7 +1,7 @@
 import express from 'express';
-import TheatersController from '@/controllers/theaters/theaters.controller';
+import TheatersController from '../controllers/theaters/theaters.controller';
 import { param, query } from 'express-validator';
-import { ExpressValidatorMiddleware } from '@/middlewares/generic-express-validator.middlewares';
+import { ExpressValidatorMiddleware } from '../middlewares/generic-express-validator.middlewares';
 
 const router = express.Router();
 
