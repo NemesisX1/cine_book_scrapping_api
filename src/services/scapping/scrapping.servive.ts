@@ -109,7 +109,7 @@ export default class ScrappingService implements BaseService {
     
         try {
     
-            await page.goto(lang == 'en' ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en`: `${infos.baseUrl}/${infos.moviesUrl}/${slug}`);
+            await page.goto(lang == 'en' ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en`: `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
            
         } catch (error) {
     
@@ -158,7 +158,7 @@ export default class ScrappingService implements BaseService {
     
         try {
     
-            await page.goto(lang == 'en' ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}`: `${infos.baseUrl}/${infos.moviesUrl}/${slug}`);
+            await page.goto(lang == 'en' ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en`: `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
            
         } catch (error) {
     
