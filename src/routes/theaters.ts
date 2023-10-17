@@ -36,8 +36,6 @@ router.get(
       theaterName: req.params.theater,
       lang: req.query.lang as string,
     };
-
-    console.log(params);
     
     const response = await theatersController.getMovies(params, res);
 
