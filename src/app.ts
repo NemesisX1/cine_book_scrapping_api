@@ -5,7 +5,8 @@ import express, { RequestHandler, ErrorRequestHandler  } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-
+import cors from "cors";
+import helmet from 'helmet';
 import indexRouter from './routes/index';
 import theatersRouter from './routes/theaters';
 
@@ -25,6 +26,8 @@ class App {
     this.app.set('view engine', 'jade');
 
     this.app.use(logger('dev'));
+    this.app.use(cors());
+    this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
