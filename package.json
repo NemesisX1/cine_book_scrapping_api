@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "prestart": "ts-node src/swagger.ts",
+    "start": "export NODE_OPTIONS='--trace-deprecation --abort-on-uncaught-exception' && export NODE_ENV=development && ts-node ./bin/www.ts",
     "dev": "nodemon --exec ts-node ./bin/www.ts",
     "build": "sh etc/build.sh",
-    "start": "sh etc/build.sh && cd dist && npm i && node bin/www.js",
+    "prod": "npm build && cd dist && npm i && node bin/www.js",
     "docs": "ts-node src/swagger.ts",
     "test": "jest --detectOpenHandles"
   },
