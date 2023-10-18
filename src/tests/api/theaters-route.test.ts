@@ -80,3 +80,4 @@ describe('Testing theaters routes', () => {
     });
 
 })
+
