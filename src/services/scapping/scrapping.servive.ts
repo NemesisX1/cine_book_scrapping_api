@@ -34,12 +34,15 @@ export default class ScrappingService implements BaseService {
      */
     public async movies(theaterName: string, lang: string = 'fr'): Promise<TheaterEventBriefModel[]> {
 
-        const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
         const page = await browser.newPage();
 
         try {
 
-            await page.goto(lang == 'en' ? `${infos.baseUrl}/en/${infos.theatersUrl}/${theaterName}-en` : `${infos.baseUrl}/${infos.theatersUrl}/${theaterName}`);
+            await page.goto(
+                lang == 'en' 
+                ? `${infos.baseUrl}/en/${infos.theatersUrl}/${theaterName}-en` 
+                : `${infos.baseUrl}/${infos.theatersUrl}/${theaterName}`);
 
         } catch (error) {
 
@@ -102,14 +105,16 @@ export default class ScrappingService implements BaseService {
      */
     public async movieInfoBySlug(slug: string, lang: string = 'fr'): Promise<TheaterEventModel> {
 
-        const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
         const page = await browser.newPage();
 
         const cleanSlug = slug.replace('-en', '');
 
         try {
 
-            await page.goto(lang == 'en' ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en` : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
+            await page.goto(lang == 'en' 
+            ?`${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en`
+            : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
 
         } catch (error) {
 
@@ -153,14 +158,16 @@ export default class ScrappingService implements BaseService {
     */
     public async movieDiffusionInfos(slug: string, lang: string = 'fr'): Promise<TheaterDiffusionInfoModel[]> {
 
-        const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
         const page = await browser.newPage();
 
         const cleanSlug = slug.replace('-en', '');
 
         try {
 
-            await page.goto(lang == 'en' ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en` : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
+            await page.goto(lang == 'en' 
+            ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en` 
+            : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
 
         } catch (error) {
 
