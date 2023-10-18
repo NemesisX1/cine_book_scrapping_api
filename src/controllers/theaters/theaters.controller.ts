@@ -43,6 +43,13 @@ export default class TheatersController implements BaseController {
             
             const theaterInfos = await this.scrappingService.theaterInfos(params.theaterName, params.lang);
             
+            if (!theaterInfos.name) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: `${params.theaterName} was not found`,
+                    errors : []
+                });   
+            }
+
             return res.status(StatusCodes.OK).json(theaterInfos);
 
         } catch (error) {
