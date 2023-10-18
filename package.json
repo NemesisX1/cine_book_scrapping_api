@@ -9,7 +9,7 @@
     "build": "sh etc/build.sh",
     "prod": "npm build && cd dist && npm i && node bin/www.js",
     "docs": "ts-node src/swagger.ts",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles --collect-coverage"
   },
   "dependencies": {
     "@types/jest": "^29.5.5",
