@@ -10,7 +10,7 @@ services:
       driver: json-file
     restart: always
     ports:
-      - "3000:3000"
+      - "3123:3123"
     environment:
       NODE_ENV: production
     env_file:
