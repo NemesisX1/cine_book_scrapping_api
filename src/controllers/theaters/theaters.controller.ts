@@ -2,7 +2,7 @@ import { getLogger } from "log4js";
 import BaseController from "../abstracts/base.controller";
 import { Response } from "express";
 import ScrappingService from "../../services/scapping/scrapping.servive";
-import {  StatusCodes } from "http-status-codes";
+import {  ReasonPhrases, StatusCodes } from "http-status-codes";
 
 export default class TheatersController implements BaseController {
    
@@ -28,6 +28,7 @@ export default class TheatersController implements BaseController {
             this.logger.warn(e.message);
 
             return res.status(StatusCodes.BAD_REQUEST).json({
+                message: ReasonPhrases.BAD_REQUEST,
                 errors: e.message,
             })
         }
@@ -41,7 +42,14 @@ export default class TheatersController implements BaseController {
         try {
             
             const movies = await this.scrappingService.movies(params.theaterName, params.lang);
-            
+
+            if (movies.length == 0) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: `${params.theaterName} was not found`,
+                    errors : []
+                })
+            }
+
             return res.status(StatusCodes.OK).json(movies);
 
         } catch (error) {
@@ -52,6 +60,7 @@ export default class TheatersController implements BaseController {
             this.logger.warn(e.message);
 
             return res.status(StatusCodes.BAD_REQUEST).json({
+                message: ReasonPhrases.BAD_REQUEST,
                 errors: e.message,
             })
         }
@@ -76,6 +85,7 @@ export default class TheatersController implements BaseController {
             this.logger.warn(e.message);
 
             return res.status(StatusCodes.BAD_REQUEST).json({
+                message: ReasonPhrases.BAD_REQUEST,
                 errors: e.message,
             })
         }
@@ -100,6 +110,7 @@ export default class TheatersController implements BaseController {
             this.logger.warn(e.message);
 
             return res.status(StatusCodes.BAD_REQUEST).json({
+                message: ReasonPhrases.BAD_REQUEST,
                 errors: e.message,
             })
         }

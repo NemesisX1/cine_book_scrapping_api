@@ -42,10 +42,11 @@ describe('Testing theaters routes', () => {
     test('if /GET theaters/movies/ with bad theater name is not working', async () => {
 
         const res = await request(app).get('/theaters/movies/123');
-
+        
         expect(res.statusCode).not.toBe(200);
 
     });
+
 
     test('if /GET theaters/movies/ with bad lang is not working', async () => {
 
