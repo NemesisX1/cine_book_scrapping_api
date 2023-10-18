@@ -15,7 +15,7 @@ export default class ScrappingService implements BaseService {
     /**
      * getTheatersNames
      */
-    /// TODO: rewrite this one by fetching theaters list directly from  https://www.xml-sitemaps.com/download/www.canalolympia.com-52d54e4ae/sitemap.xml?view=1
+    // TODO: rewrite this one by fetching theaters list directly from  https://www.xml-sitemaps.com/download/www.canalolympia.com-52d54e4ae/sitemap.xml?view=1
     public theatersNames(): string[] {
         const names: string[] = [];
 
