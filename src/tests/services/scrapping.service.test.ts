@@ -65,7 +65,7 @@ describe('Test on Scapping Service', () => {
             expect(info.descriptionBrief).not.toBeNull();
 
             const hasReadMore = info.descriptionBrief.includes('Lire la suite');
-            
+
             expect(hasReadMore).not.toBe(true);
 
         });
@@ -90,6 +90,23 @@ describe('Test on Scapping Service', () => {
 
             expect(infos.length).toBeGreaterThan(0);
 
+        });
+
+    });
+
+
+
+    test('if theaterInfos is working', async () => {
+
+        return scrappingService.theaterInfos('wologuede').then((infos) => {
+    
+            expect(infos).not.toBeNull();
+            expect(infos.name).toBeDefined();
+            expect(infos.location).toBeDefined();
+            expect(infos.locationUrl).toBeDefined();
+            expect(infos.pricing.length).toBeGreaterThan(0);
+            expect(infos.media.length).toBeGreaterThan(0);
+            
         });
 
     });

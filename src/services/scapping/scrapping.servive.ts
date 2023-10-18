@@ -6,6 +6,7 @@ import puppeteer from 'puppeteer';
 import TheaterEventModel from "@/models/theater-event.model";
 import TheaterEventBriefModel from "@/models/theater-event-brief.model";
 import TheaterDiffusionInfoModel from "@/models/theater-diffusion-info.model";
+import TheaterInfosModel from "@/models/theater-info.model";
 
 export default class ScrappingService implements BaseService {
 
@@ -40,9 +41,9 @@ export default class ScrappingService implements BaseService {
         try {
 
             await page.goto(
-                lang == 'en' 
-                ? `${infos.baseUrl}/en/${infos.theatersUrl}/${theaterName}-en` 
-                : `${infos.baseUrl}/${infos.theatersUrl}/${theaterName}`);
+                lang == 'en'
+                    ? `${infos.baseUrl}/en/${infos.theatersUrl}/${theaterName}-en`
+                    : `${infos.baseUrl}/${infos.theatersUrl}/${theaterName}`);
 
         } catch (error) {
 
@@ -112,9 +113,9 @@ export default class ScrappingService implements BaseService {
 
         try {
 
-            await page.goto(lang == 'en' 
-            ?`${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en`
-            : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
+            await page.goto(lang == 'en'
+                ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en`
+                : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
 
         } catch (error) {
 
@@ -165,9 +166,9 @@ export default class ScrappingService implements BaseService {
 
         try {
 
-            await page.goto(lang == 'en' 
-            ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en` 
-            : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
+            await page.goto(lang == 'en'
+                ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en`
+                : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
 
         } catch (error) {
 
@@ -228,6 +229,83 @@ export default class ScrappingService implements BaseService {
 
         return diffusionInfos;
     }
+
+
+    /**
+     * theaterInfos
+     * lang can be either fr or en
+     */
+    public async theaterInfos(theaterName: string, lang: string = 'fr'): Promise<TheaterInfosModel> {
+
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const page = await browser.newPage();
+
+        const cleanedTheaterName = theaterName.replace('-en', '');
+
+        try {
+
+            await page.goto(lang == 'en'
+                ? `${infos.baseUrl}/en/${infos.theatersUrl}/${cleanedTheaterName}-en`
+                : `${infos.baseUrl}/${infos.theatersUrl}/${cleanedTheaterName}`);
+
+        } catch (error) {
+
+            this.logger.fatal('theaterInfos');
+            this.logger.fatal(error);
+
+            throw Error((error as Error).message);
+
+        }
+
+
+        const htmlRoot = parse(await page.content());
+
+        const name = htmlRoot.querySelector('div.theater-top-container-cover-content > h1')?.textContent;
+        const location = htmlRoot.querySelector('div.theater-top-container-cover-content > a')?.textContent;
+        const locationUrl = htmlRoot.querySelector('div.theater-top-container-cover-content > a')?.rawAttributes.href;
+
+        const pricingLi = htmlRoot.querySelectorAll('section.slider-and-pricing > div.wrapper > div.pricing > ul.prices-table > li');
+        const pricing: {
+            people: string,
+            price: string,
+        }[] = [];
+
+        pricingLi.forEach((e) => {
+            pricing.push({
+                people: e.querySelector('span.price-name')?.textContent?.replaceAll('*', '')!,
+                price: e.querySelector('span.price-value')?.textContent!
+            });
+        });
+
+        const mediaLi = htmlRoot.querySelectorAll('div.theater-top-container-cover-content > div.info-section-rs > a');
+        const media: {
+            title: string,
+            link: string,
+        }[] = [];
+ 
+
+        mediaLi.forEach((e) => {
+            media.push({
+                title: e.rawAttributes.href,
+                link: e.querySelector('img')?.rawAttributes.alt!
+            });
+        });
+
+
+        const theaterInfos: TheaterInfosModel = {
+            name: name!,
+            lang: lang,
+            location: location!,
+            locationUrl: locationUrl!,
+            pricing: pricing,
+            media: media,
+        };
+
+        await browser.close();
+
+        return theaterInfos;
+    }
+
 
 }
 

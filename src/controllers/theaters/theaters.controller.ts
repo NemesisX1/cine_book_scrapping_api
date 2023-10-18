@@ -34,6 +34,31 @@ export default class TheatersController implements BaseController {
         }
     }
 
+      /**
+     * getTheaterInfos
+     */
+      public async  getTheaterInfos(params: {theaterName: string, lang: string}, res: Response) : Promise<Response> {
+        
+        try {
+            
+            const theaterInfos = await this.scrappingService.theaterInfos(params.theaterName, params.lang);
+            
+            return res.status(StatusCodes.OK).json(theaterInfos);
+
+        } catch (error) {
+           
+            const e = error as Error;
+
+            this.logger.warn('getTheaterInfos');
+            this.logger.warn(e.message);
+
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: ReasonPhrases.BAD_REQUEST,
+                errors: e.message,
+            })
+        }
+    }
+
     /**
      * getMovies
      */

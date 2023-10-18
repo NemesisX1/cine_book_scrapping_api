@@ -8,16 +8,40 @@ const router = express.Router();
 const theatersController = new TheatersController();
 
 router.get(
-  '/names', 
-  
+  '/names',
+
   async function (_req, res, _next) {
-   
-  // #swagger.tags = ['Theaters']
+
+    // #swagger.tags = ['Theaters']
 
     const response = await theatersController.getTheatersNames(res);
 
     return response;
-});
+  });
+
+
+router.get(
+  '/infos/:theater',
+
+  param('theater').isString(),
+  query('lang').default('fr').isIn(['fr', 'en']),
+
+  ExpressValidatorMiddleware,
+
+  async function (req, res, _next) {
+
+    // #swagger.tags = ['Theaters']
+
+    const params = {
+      theaterName: req.params.theater,
+      lang: req.query.lang as string,
+    };
+
+    const response = await theatersController.getTheaterInfos(params, res);
+
+    return response;
+  });
+
 
 
 router.get(
@@ -29,18 +53,18 @@ router.get(
   ExpressValidatorMiddleware,
 
   async function (req, res, _next) {
-   
-  // #swagger.tags = ['Theaters']
+
+    // #swagger.tags = ['Theaters']
 
     const params = {
       theaterName: req.params.theater,
       lang: req.query.lang as string,
     };
-    
+
     const response = await theatersController.getMovies(params, res);
 
     return response;
-});
+  });
 
 
 router.get(
@@ -52,8 +76,8 @@ router.get(
   ExpressValidatorMiddleware,
 
   async function (req, res, _next) {
-   
-  // #swagger.tags = ['Theaters']
+
+    // #swagger.tags = ['Theaters']
 
     const params = {
       slug: req.params.slug,
@@ -63,7 +87,7 @@ router.get(
     const response = await theatersController.getMovieInfoBySlug(params, res);
 
     return response;
-});
+  });
 
 
 router.get(
@@ -75,8 +99,8 @@ router.get(
   ExpressValidatorMiddleware,
 
   async function (req, res, _next) {
-   
-  // #swagger.tags = ['Theaters']
+
+    // #swagger.tags = ['Theaters']
 
     const params = {
       slug: req.params.slug,
@@ -86,7 +110,7 @@ router.get(
     const response = await theatersController.getMovieDiffusionInfos(params, res);
 
     return response;
-});
+  });
 
 
 export default router;
