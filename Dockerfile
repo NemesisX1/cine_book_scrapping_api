@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:16
 
 RUN apt-get update && apt-get install gnupg wget -y && \
     wget --quiet --output-document=- https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /etc/apt/trusted.gpg.d/google-archive.gpg && \
@@ -12,8 +12,6 @@ RUN apt-get clean
 WORKDIR /app
 
 COPY package*.json ./
-
-RUN npm install -g npm@10.2.0
 
 RUN npm config set registry http://registry.npmjs.org
 
