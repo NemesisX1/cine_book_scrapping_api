@@ -1,6 +1,8 @@
-# [Non-Official] Canal Olympia Web API (scrapper)
+# [Non-Official] Canal Olympia Web API (scrapper) [![Running tests workflow](https://github.com/NemesisX1/canal_olympia_scrapping_api/actions/workflows/main.yml/badge.svg)](https://github.com/NemesisX1/canal_olympia_scrapping_api/actions/workflows/main.yml)
 
 This is a non-official scrapper to get movies and theaters data directly from the Canal Olympia's website.
+
+
 
 > ## 👀 Overview
 

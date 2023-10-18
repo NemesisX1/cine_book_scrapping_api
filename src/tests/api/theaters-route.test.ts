@@ -1,8 +1,14 @@
 import app from '../../app';
 import { describe, test, expect } from "@jest/globals";
+import { exit } from 'process';
 import request from 'supertest';
 
 describe('Testing theaters routes', () => {
+
+    afterAll(()  => {
+        exit(0);
+    })
+    
     test('if /GET is working', async () => {
 
         const res = await request(app).get('/');
