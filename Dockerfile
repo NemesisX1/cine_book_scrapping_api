@@ -4,9 +4,13 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN curl -o chrome-linux64.zip https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5938.92/linux64/chrome-linux64.zip
-
-RUN unzip chrome-linux64.zip &&  cp chrome-linux64 /home/user/.cache/puppeteer/chrome/linux-117.0.5938.92/.
+RUN apt-get update && apt-get install gnupg wget -y && \
+    wget --quiet --output-document=- https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /etc/apt/trusted.gpg.d/google-archive.gpg && \
+    sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
+    apt-get update && \
+    apt-get install google-chrome-stable -y --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
 
 RUN npm install
 
