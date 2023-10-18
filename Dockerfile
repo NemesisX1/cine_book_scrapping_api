@@ -7,11 +7,17 @@ RUN apt-get update && apt-get install gnupg wget -y && \
     apt-get install google-chrome-stable -y --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
+RUN apt-get clean
+
 WORKDIR /app
 
 COPY package*.json ./
 
 RUN npm install -g npm@10.2.0
+
+RUN npm cache clean -f
+
+RUN npm config set registry http://registry.npmjs.org
 
 RUN npm ci
 
