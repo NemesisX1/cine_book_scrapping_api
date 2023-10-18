@@ -5,14 +5,13 @@ import request from 'supertest';
 
 describe('Testing theaters routes', () => {
 
-    afterAll(()  => {
-        exit(0);
-    })
+    const reqApp = request(app);
     
     test('if /GET is working', async () => {
 
-        const res = await request(app).get('/');
+        const res = await reqApp.get('/');
 
+        
         expect(res.statusCode).toBe(200);
 
     });
@@ -20,7 +19,7 @@ describe('Testing theaters routes', () => {
 
     test('if /GET theaters/names is working', async () => {
 
-        const res = await request(app).get('/theaters/names');
+        const res = await reqApp.get('/theaters/names');
 
         expect(res.statusCode).toBe(200);
 
@@ -29,7 +28,7 @@ describe('Testing theaters routes', () => {
 
     test('if /GET theaters/movies/ is working', async () => {
 
-        const res = await request(app).get('/theaters/movies/wologuede');
+        const res = await reqApp.get('/theaters/movies/wologuede');
 
         expect(res.statusCode).toBe(200);
 
@@ -38,7 +37,7 @@ describe('Testing theaters routes', () => {
 
     test('if /GET theaters/movies/ is working with lang en', async () => {
 
-        const res = await request(app).get('/theaters/movies/wologuede?lang=en');
+        const res = await reqApp.get('/theaters/movies/wologuede?lang=en');
 
         expect(res.statusCode).toBe(200);
 
@@ -47,7 +46,7 @@ describe('Testing theaters routes', () => {
 
     test('if /GET theaters/movies/ with bad theater name is not working', async () => {
 
-        const res = await request(app).get('/theaters/movies/123');
+        const res = await reqApp.get('/theaters/movies/123');
         
         expect(res.statusCode).not.toBe(200);
 
@@ -56,7 +55,7 @@ describe('Testing theaters routes', () => {
 
     test('if /GET theaters/movies/ with bad lang is not working', async () => {
 
-        const res = await request(app).get('/theaters/movies/wologuede?lang=zk');
+        const res = await reqApp.get('/theaters/movies/wologuede?lang=zk');
 
         expect(res.statusCode).not.toBe(200);
 
@@ -65,7 +64,7 @@ describe('Testing theaters routes', () => {
 
     test('if /GET theaters/movie-infos/ is working', async () => {
 
-        const res = await request(app).get('/theaters/movie-infos/banel-adama');
+        const res = await reqApp.get('/theaters/movie-infos/banel-adama');
 
         expect(res.statusCode).toBe(200);
 
@@ -74,7 +73,7 @@ describe('Testing theaters routes', () => {
 
     test('if /GET theaters/movie-infos/ is working with lang en', async () => {
 
-        const res = await request(app).get('/theaters/movie-infos/banel-adama?lang=en');
+        const res = await reqApp.get('/theaters/movie-infos/banel-adama?lang=en');
 
         expect(res.statusCode).toBe(200);
 
