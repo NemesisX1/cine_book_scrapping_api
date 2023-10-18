@@ -58,6 +58,8 @@ export default class ScrappingService implements BaseService {
 
         const result: TheaterEventBriefModel[] = [];
 
+
+        /// TODO: reduce complexity by using in a more efficient way the html parser and its querySelector
         for (const element of elements) {
 
             const text = await page.evaluate(el => el.outerHTML, element);
