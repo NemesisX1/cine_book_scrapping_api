@@ -15,9 +15,9 @@ COPY package*.json ./
 
 RUN npm install -g npm@10.2.0
 
-RUN npm cache clean -f
-
 RUN npm config set registry http://registry.npmjs.org
+
+RUN npm cache clean -f
 
 RUN npm ci
 
