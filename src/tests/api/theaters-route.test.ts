@@ -82,9 +82,7 @@ describe('Testing theaters routes', () => {
     test('if /GET theaters/infos/ is working', async () => {
 
         const res = await reqApp.get('/theaters/infos/wologuede');
-
-        console.log(res.body);
-        
+       
         expect(res.statusCode).toBe(200);
 
     });
@@ -93,8 +91,6 @@ describe('Testing theaters routes', () => {
     test('if /GET theaters/infos/ with bad theater name is not working', async () => {
 
         const res = await reqApp.get('/theaters/infos/123');
-
-        console.log(res.body);
         
         expect(res.statusCode).not.toBe(200);
 
@@ -104,8 +100,6 @@ describe('Testing theaters routes', () => {
     test('if /GET theaters/infos/ is working with lang en', async () => {
 
         const res = await reqApp.get('/theaters/infos/wologuede?lang=en');
-
-        console.log(res.body);
 
         expect(res.statusCode).toBe(200);
 
