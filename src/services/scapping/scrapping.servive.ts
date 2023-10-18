@@ -3,10 +3,10 @@ import BaseService from "../abstracts/base.service";
 import { HTMLElement, parse } from 'node-html-parser';
 import theatersUrls from '../../../data/theaters.json'
 import puppeteer from 'puppeteer';
-import TheaterEventModel from "@/models/theater-event.model";
-import TheaterEventBriefModel from "@/models/theater-event-brief.model";
-import TheaterDiffusionInfoModel from "@/models/theater-diffusion-info.model";
-import TheaterInfosModel from "@/models/theater-info.model";
+import TheaterEventModel from "../../models/theater-event.model";
+import TheaterEventBriefModel from "../../models/theater-event-brief.model";
+import TheaterDiffusionInfoModel from "../../models/theater-diffusion-info.model";
+import TheaterInfosModel from "../../models/theater-info.model";
 
 export default class ScrappingService implements BaseService {
 
