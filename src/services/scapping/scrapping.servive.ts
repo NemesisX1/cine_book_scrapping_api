@@ -134,7 +134,7 @@ export default class ScrappingService implements BaseService {
         const duration = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.time')?.textContent.split(':').pop()?.trim();
 
         /// TODO: find a way to get the remaining text
-        const brief = htmlRoot.querySelector('div.movie-top-container-content-wrapper > p')?.textContent;
+        const brief = htmlRoot.querySelector('div.synopse-modal > p')?.textContent;
         const trailerUrl = htmlRoot.querySelector('div.wrapper > div.movie > iframe')?.rawAttributes.src;
 
         const theaterEvent: TheaterEventModel = {

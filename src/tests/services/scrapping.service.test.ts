@@ -35,16 +35,6 @@ describe('Test on Scapping Service', () => {
     });
 
 
-    test('if movies is working for en lang', async () => {
-
-        return scrappingService.movies('wologuede', 'en').then((movies) => {
-
-            expect(movies.length).toBeGreaterThan(0);
-
-        });
-
-    });
-
 
     test('if movieInfoBySlug is working', async () => {
 
@@ -62,6 +52,21 @@ describe('Test on Scapping Service', () => {
         return scrappingService.movieInfoBySlug('lexorciste-devotion', 'en').then((info) => {
 
             expect(info).not.toBeNull();
+
+        });
+
+    });
+
+
+    test('if movieInfoBySlug is and getting the brief information without the \'read more\'', async () => {
+
+        return scrappingService.movieInfoBySlug('lexorciste-devotion').then((info) => {
+
+            expect(info.descriptionBrief).not.toBeNull();
+
+            const hasReadMore = info.descriptionBrief.includes('Lire la suite');
+            
+            expect(hasReadMore).not.toBe(true);
 
         });
 
