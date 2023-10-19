@@ -35,8 +35,12 @@
 * [X] Handling language support when fetching movie informations
 * [X] Handling language support when fetching theater informations
 * [X] Fetching movies of the current week by theaters
-* [ ] Fetching movies categories
 * [ ] Fetching movies diffusion informations by theaters
+* [ ] Fetching avalaible theaters with escape game
+* [ ] Handling language support when fetching avalaible theaters with escape game
+* [ ] Fetching escape game activities informations (name, hours, difficulties ? and other related informations)
+* [ ] Handling language support when fetching escape game activities informations (name, hours, difficulties ? and other related informations)
+* [ ] Fetching movies categories
 * [ ] Handling language support when fetching movies categories
 * [ ] Managing access to the api through api keys
 * [ ] A landing page ?
