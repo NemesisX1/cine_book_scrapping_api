@@ -4,10 +4,9 @@
 
 ### The app architecture
 
-<aside>
-💡 Service  -> Controller -> Route -> App
 
-</aside>
+> 💡 **Service  -> Controller -> Route -> App**
+
 
 - Services (located in the services folder) handle the core logic of the app and provide the main app features in a logical part
 - Controllers (located in the controllers folder) handle the network (aka HTTP) logic. They handle the app's HTTP response. They mostly use one or more Services and return express responses according to the return value of the called functions. Most of a controller’s function take request’s parameters and a Response as arguments and return a  Response as return value
