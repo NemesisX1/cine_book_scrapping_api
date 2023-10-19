@@ -20,6 +20,7 @@ The core scrapper is made up of these two packages:
 - [Puppeteer](https://pptr.dev/) who act as the main scrapper
 - [node-html-parser](https://www.npmjs.com/package/node-html-parser) who helps to parse the html document (thinking about removing this one later, I really guess that i can fully rely on Puppeteer)
 
+
 > ### 🚀 Deployment
 
 - With npm
