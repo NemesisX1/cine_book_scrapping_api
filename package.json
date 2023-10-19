@@ -12,6 +12,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@sentry/node": "^7.74.1",
+    "@sentry/profiling-node": "^1.2.1",
     "@types/jest": "^29.5.5",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

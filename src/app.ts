@@ -2,6 +2,8 @@ import createError from 'http-errors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './docs/swagger-output.json';
 import express, { RequestHandler, ErrorRequestHandler  } from 'express';
+import * as Sentry from "@sentry/node";
+import { ProfilingIntegration } from "@sentry/profiling-node";
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
@@ -9,6 +11,7 @@ import cors from "cors";
 import helmet from 'helmet';
 import indexRouter from './routes/index';
 import theatersRouter from './routes/theaters';
+
 
 class App {
   public app: express.Application;
@@ -21,6 +24,26 @@ class App {
   }
 
   private config() {
+   
+    // sentry configuration for api performance monitoring
+    if (process.env.SENTRY_DSN) {
+      Sentry.init({
+        dsn: process.env.SENTRY_DSN,
+        integrations: [
+          // enable HTTP calls tracing
+          new Sentry.Integrations.Http({ tracing: true }),
+          // enable Express.js middleware tracing
+          new Sentry.Integrations.Express(this),
+          new ProfilingIntegration(),
+          ...Sentry.autoDiscoverNodePerformanceMonitoringIntegrations(),
+        ],
+        // Performance Monitoring
+        tracesSampleRate: 1.0,
+        // Set sampling rate for profiling - this is relative to tracesSampleRate
+        profilesSampleRate: 1.0,
+      });
+    }
+
     // view engine setup
     this.app.set('views', path.join(__dirname, 'views'));
     this.app.set('view engine', 'jade');
@@ -32,6 +55,8 @@ class App {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
     this.app.use(express.static(path.join(__dirname, 'public')));
+
+ 
   }
 
   private routerSetup() {
