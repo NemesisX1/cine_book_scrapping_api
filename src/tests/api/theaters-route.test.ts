@@ -4,7 +4,9 @@ import request from 'supertest';
 
 describe('Testing theaters routes', () => {
 
-    const reqApp = request(app);
+    const reqApp = request(app, {
+        
+    });
     
     test('if /GET is working', async () => {
 
@@ -82,6 +84,7 @@ describe('Testing theaters routes', () => {
     test('if /GET theaters/infos/ is working', async () => {
 
         const res = await reqApp.get('/theaters/infos/wologuede');
+    
        
         expect(res.statusCode).toBe(200);
 
