@@ -2,8 +2,7 @@
 
 This is a non-official scrapper to get movies and theaters data directly from the Canal Olympia's website.
 
-**If you want to contribute check [this file](CONTRIBUTING.md).**
-
+**If you want to contribute check [this file](https://github.com/NemesisX1/canal_olympia_scrapping_api/blob/main/CONTRIBUTING.md).**
 
 > ## 👀 Overview
 

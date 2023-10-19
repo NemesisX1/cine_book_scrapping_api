@@ -16,4 +16,34 @@
 
 ## How to contribute ?
 
+- Star this repository
+- Complete the swagger documentation ([link](https://swagger-autogen.github.io/docs/))
+- Technical articles about this api
+- Fixing typos when you notice ones
+- Fixing issues
+- Adding features
+- Create API clients
+- Build projects
+- Suggest features
+
 ## Roadmap
+
+### Technical
+
+* [X] Fetching theaters name
+* [X] Fetching theaters informations (location, social media, pricing)
+* [X] Fetching movies of the current week
+* [X] Fetching movies informations
+* [X] Fetching movies diffusion informations
+* [X] Handling language support when fetching movie informations
+* [X] Handling language support when fetching theater informations
+* [ ] Fetching movies diffusion informations by theaters
+* [ ] Fetching movies categories
+* [ ] Handling language support when fetching movies categories
+* [ ] Fetching movies of the current week by theaters
+* [ ] Managing access to the api through api keys
+* [ ] A landing page ?
+
+### Non Technical
+
+- [ ] A nice logo for this project
