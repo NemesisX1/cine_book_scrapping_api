@@ -46,7 +46,7 @@ class App {
 
     // view engine setup
     this.app.set('views', path.join(__dirname, 'views'));
-    this.app.set('view engine', 'jade');
+    this.app.set('view engine', 'ejs');
 
     this.app.use(logger('dev'));
     this.app.use(cors());
