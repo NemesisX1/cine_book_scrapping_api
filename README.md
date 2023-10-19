@@ -20,7 +20,6 @@ The core scrapper is made up of these two packages:
 - [Puppeteer](https://pptr.dev/) who act as the main scrapper
 - [node-html-parser](https://www.npmjs.com/package/node-html-parser) who helps to parse the html document (thinking about removing this one later, I really guess that i can fully rely on Puppeteer)
 
-
 > ### 🚀 Deployment
 
 - With npm
@@ -40,5 +39,10 @@ The core scrapper is made up of these two packages:
   ```
   sudo docker compose up -d
   ```
+
+
+
+Then go to `localhost:3213` or (localhost:PORT with PORT defined in the .env file)
+
 
 **Elikem Medehou** [![Twitter Follow](https://img.shields.io/twitter/follow/juniormedehou_?label=Follow&style=social)](https://twitter.com/juniormedehou_)
