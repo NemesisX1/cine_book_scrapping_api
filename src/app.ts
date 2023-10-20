@@ -11,7 +11,7 @@ import cors from "cors";
 import helmet from 'helmet';
 import indexRouter from './routes/index';
 import theatersRouter from './routes/theaters';
-
+import moviesRouter from './routes/movies';
 
 class App {
   public app: express.Application;
@@ -66,6 +66,7 @@ class App {
     this.app.use('/', indexRouter);
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     this.app.use('/theaters', theatersRouter);
+    this.app.use('/movies', moviesRouter);
   
   }
 
