@@ -42,18 +42,35 @@ describe('Testing movies routes', () => {
     });
 
 
-    test('if /GET theaters/movie-infos/ is working', async () => {
+    test('if /GET /movies/infos/ is working', async () => {
 
-        const res = await reqApp.get('/theaters/movie-infos/banel-adama');
+        const res = await reqApp.get('movies/infos/banel-adama');
 
         expect(res.statusCode).toBe(200);
 
     });
 
 
-    test('if /GET theaters/movie-infos/ is working with lang en', async () => {
+    test('if /GET movies/infos/ is working with lang en', async () => {
 
-        const res = await reqApp.get('/theaters/movie-infos/banel-adama?lang=en');
+        const res = await reqApp.get('/infos/banel-adama?lang=en');
+
+        expect(res.statusCode).toBe(200);
+
+    });
+
+    test('if /GET /movies/diffusion-infos/ is working', async () => {
+
+        const res = await reqApp.get('movies/diffusion-infos/banel-adama');
+
+        expect(res.statusCode).toBe(200);
+
+    });
+
+
+    test('if /GET movies/diffusion-infos/ is working with lang en', async () => {
+
+        const res = await reqApp.get('/diffusion-infos/banel-adama?lang=en');
 
         expect(res.statusCode).toBe(200);
 
