@@ -48,7 +48,7 @@ export default class MoviesController implements BaseController {
        
         try {
             
-            const infos = await this.scrappingService.movieInfoBySlug(params.slug, params.lang);
+            const infos = await this.scrappingService.movieInfoBySlug(params.slug, params.lang,);
             
             return res.status(StatusCodes.OK).json(infos);
 
@@ -69,11 +69,11 @@ export default class MoviesController implements BaseController {
       /**
      * getMovieInfoBySlug
      */
-      public async getMovieDiffusionInfos(params: {slug: string, lang: string}, res: Response) : Promise<Response> {
+      public async getMovieDiffusionInfos(params: {theater?: string, slug: string, lang: string}, res: Response) : Promise<Response> {
        
         try {
             
-            const infos = await this.scrappingService.movieDiffusionInfos(params.slug, params.lang);
+            const infos = await this.scrappingService.movieDiffusionInfos(params.slug, params.lang, params.theater);
             
             return res.status(StatusCodes.OK).json(infos);
 

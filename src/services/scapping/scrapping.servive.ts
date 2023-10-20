@@ -158,7 +158,7 @@ export default class ScrappingService implements BaseService {
      * getMovieDiffusionInfos
      * lang can be either fr or en
     */
-    public async movieDiffusionInfos(slug: string, lang: string = 'fr'): Promise<TheaterDiffusionInfoModel[]> {
+    public async movieDiffusionInfos(slug: string, lang: string = 'fr', theaterName?: string): Promise<TheaterDiffusionInfoModel[]> {
 
         const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
         const page = await browser.newPage();
@@ -189,7 +189,10 @@ export default class ScrappingService implements BaseService {
 
             const e = element as HTMLElement;
 
-            if (e.localName === 'div') {
+            console.log(e.rawAttributes);
+            
+
+            if (e.localName === 'div' && (theaterName ? e.rawAttributes['data-name'] == theaterName : true)) {
 
                 const theaterName = e.rawAttributes['data-name'];
                 //  const 
@@ -208,6 +211,7 @@ export default class ScrappingService implements BaseService {
                         const weekNumber = li.rawAttributes['data-day'];
                         const weekDay = li.querySelector('span.week-day')?.innerText!;
                         const dataHours: string[] = [];
+                        
 
                         e.querySelectorAll(`ul[data-day=${weekNumber}] > li`).forEach((e) => {
                             dataHours.push(e.innerText)

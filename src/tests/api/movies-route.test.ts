@@ -59,10 +59,22 @@ describe('Testing movies routes', () => {
 
     });
 
+    
     test('if /GET /movies/diffusion-infos/ is working', async () => {
 
         const res = await reqApp.get('/movies/diffusion-infos/banel-adama');
 
+        expect(res.statusCode).toBe(200);
+
+    });
+
+
+     test('if /GET /movies/diffusion-infos/ is working with theater name', async () => {
+
+        const res = await reqApp.get('/movies/diffusion-infos/banel-adama?theater=wologuede');
+
+        console.log(res.body);
+        
         expect(res.statusCode).toBe(200);
 
     });

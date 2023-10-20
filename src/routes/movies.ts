@@ -10,78 +10,78 @@ const theatersController = new MoviesController();
 
 
 router.get(
-  '/:theater',
+    '/:theater',
 
-  param('theater').isString(),
-  query('lang').default('fr').isIn(['fr', 'en']),
+    param('theater').isString(),
+    query('lang').default('fr').isIn(['fr', 'en']),
 
-  ExpressValidatorMiddleware,
+    ExpressValidatorMiddleware,
 
-  async function (req, res, _next) {
+    async function (req, res, _next) {
 
-    // #swagger.tags = ['Movies']
+        // #swagger.tags = ['Movies']
 
-    const params = {
-      theaterName: req.params.theater,
-      lang: req.query.lang as string,
-    };
+        const params = {
+            theaterName: req.params.theater,
+            lang: req.query.lang as string,
+        };
 
-    const response = await theatersController.getMovies(params, res);
+        const response = await theatersController.getMovies(params, res);
 
-    return response;
-  });
-
-
-router.get(
-  '/infos/:slug',
-
-  param('slug').isString(),
-  query('lang').default('fr').isIn(['fr', 'en']),
-
-  ExpressValidatorMiddleware,
-
-  async function (req, res, _next) {
-
-    // #swagger.tags = ['Movies']
-
-    const params = {
-      slug: req.params.slug,
-      lang: req.query.lang as string,
-    };
-
-    console.log(params);
-
-    const response = await theatersController.getMovieInfoBySlug(params, res);
-
-    return response;
-  });
+        return response;
+    });
 
 
 router.get(
-  '/diffusion-infos/:slug',
+    '/infos/:slug',
 
-  param('slug').isString(),
-  query('lang').default('fr').isIn(['fr', 'en']),
+    param('slug').isString(),
+    query('lang').default('fr').isIn(['fr', 'en']),
 
-  ExpressValidatorMiddleware,
+    ExpressValidatorMiddleware,
 
-  async function (req, res, _next) {
+    async function (req, res, _next) {
 
-    // #swagger.tags = ['Movies']
+        // #swagger.tags = ['Movies']
 
-    const params = {
-      slug: req.params.slug,
-      lang: req.query.lang as string,
-    };
+        const params = {
+            slug: req.params.slug,
+            lang: req.query.lang as string,
+        };
 
 
-    console.log(params);
-    
+        const response = await theatersController.getMovieInfoBySlug(params, res);
 
-    const response = await theatersController.getMovieDiffusionInfos(params, res);
+        return response;
+    });
 
-    return response;
-  });
+
+router.get(
+    '/diffusion-infos/:slug',
+
+    param('slug').isString(),
+    query('theater').optional(),
+    query('lang').default('fr').isIn(['fr', 'en']),
+
+    ExpressValidatorMiddleware,
+
+    async function (req, res, _next) {
+
+        // #swagger.tags = ['Movies']
+
+        const params = {
+            theater: req.query.theater as string,
+            slug: req.params.slug,
+            lang: req.query.lang as string,
+        };
+
+
+
+
+        const response = await theatersController.getMovieDiffusionInfos(params, res);
+
+        return response;
+    });
 
 
 export default router;
