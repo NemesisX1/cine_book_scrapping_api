@@ -19,6 +19,8 @@ RUN npm cache clean -f
 
 RUN npm ci
 
+RUN npm run test
+
 COPY . .
 
 EXPOSE 3123
