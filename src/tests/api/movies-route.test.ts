@@ -6,7 +6,7 @@ import request from 'supertest';
 describe('Testing movies routes', () => {
 
     const reqApp = request(app);
-    test('if /GET theaters/movies/ is working', async () => {
+    test('if /GET /movies/ is working', async () => {
 
         const res = await reqApp.get('/movies/wologuede');
 
@@ -15,7 +15,7 @@ describe('Testing movies routes', () => {
     });
 
 
-    test('if /GET theaters/movies/ is working with lang en', async () => {
+    test('if /GET /movies/ is working with lang en', async () => {
 
         const res = await reqApp.get('/movies/wologuede?lang=en');
 
@@ -24,7 +24,7 @@ describe('Testing movies routes', () => {
     });
 
 
-    test('if /GET theaters/movies/ with bad theater name is not working', async () => {
+    test('if /GET /movies/ with bad theater name is not working', async () => {
 
         const res = await reqApp.get('/movies/123');
         
@@ -33,7 +33,7 @@ describe('Testing movies routes', () => {
     });
 
 
-    test('if /GET theaters/movies/ with bad lang is not working', async () => {
+    test('if /GET /movies/ with bad lang is not working', async () => {
 
         const res = await reqApp.get('/movies/wologuede?lang=zk');
 
