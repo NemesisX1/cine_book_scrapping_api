@@ -1,3 +1,4 @@
+import TheaterEventBriefModel from '@/models/theater-event-brief.model';
 import app from '../../app';
 import { describe, test, expect } from "@jest/globals";
 import request from 'supertest';
@@ -6,9 +7,14 @@ import request from 'supertest';
 describe('Testing movies routes', () => {
 
     const reqApp = request(app);
+
+    let testingMovieSlug: string;
+
     test('if /GET /movies/ is working', async () => {
 
         const res = await reqApp.get('/movies/wologuede');
+
+        testingMovieSlug = (res.body as TheaterEventBriefModel[])[0].slug;
 
         expect(res.statusCode).toBe(200);
 
@@ -44,7 +50,7 @@ describe('Testing movies routes', () => {
 
     test('if /GET /movies/infos/ is working', async () => {
 
-        const res = await reqApp.get('/movies/infos/banel-adama');
+        const res = await reqApp.get(`/movies/infos/${testingMovieSlug}`);
 
         expect(res.statusCode).toBe(200);
 
@@ -53,7 +59,7 @@ describe('Testing movies routes', () => {
 
     test('if /GET movies/infos/ is working with lang en', async () => {
 
-        const res = await reqApp.get('/movies/infos/banel-adama?lang=en');
+        const res = await reqApp.get(`/movies/infos/${testingMovieSlug}?lang=en`);
 
         expect(res.statusCode).toBe(200);
 
@@ -62,7 +68,7 @@ describe('Testing movies routes', () => {
     
     test('if /GET /movies/diffusion-infos/ is working', async () => {
 
-        const res = await reqApp.get('/movies/diffusion-infos/banel-adama');
+        const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}`);
 
         expect(res.statusCode).toBe(200);
 
@@ -71,7 +77,7 @@ describe('Testing movies routes', () => {
 
      test('if /GET /movies/diffusion-infos/ is working with theater name', async () => {
 
-        const res = await reqApp.get('/movies/diffusion-infos/banel-adama?theater=wologuede');
+        const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?theater=wologuede`);
 
         console.log(res.body);
         
@@ -82,7 +88,7 @@ describe('Testing movies routes', () => {
 
     test('if /GET movies/diffusion-infos/ is working with lang en', async () => {
 
-        const res = await reqApp.get('/movies/diffusion-infos/banel-adama?lang=en');
+        const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?lang=en`);
 
         expect(res.statusCode).toBe(200);
 
