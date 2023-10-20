@@ -1,6 +1,5 @@
 import TheaterEventBriefModel from '@/models/theater-event-brief.model';
 import app from '../../app';
-import { describe, test, expect } from "@jest/globals";
 import request from 'supertest';
 
 
@@ -17,6 +16,7 @@ describe('Testing movies routes', () => {
         testingMovieSlug = (res.body as TheaterEventBriefModel[])[0].slug;
 
         expect(res.statusCode).toBe(200);
+
 
     });
 

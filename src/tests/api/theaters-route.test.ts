@@ -1,5 +1,4 @@
 import app from '../../app';
-import { describe, test, expect } from "@jest/globals";
 import request from 'supertest';
 
 describe('Testing theaters routes', () => {
@@ -41,6 +40,15 @@ describe('Testing theaters routes', () => {
         const res = await reqApp.get('/theaters/infos/123');
         
         expect(res.statusCode).not.toBe(200);
+
+    });
+
+
+    test('if /GET theaters/infos/ with bad lang is not working', async () => {
+
+       const res = await reqApp.get('/theaters/infos/wologuede?lang=zk');
+
+       expect(res.statusCode).not.toBe(200);
 
     });
 
