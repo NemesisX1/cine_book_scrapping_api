@@ -49,6 +49,8 @@ router.get(
       lang: req.query.lang as string,
     };
 
+    console.log(params);
+
     const response = await theatersController.getMovieInfoBySlug(params, res);
 
     return response;
@@ -71,6 +73,10 @@ router.get(
       slug: req.params.slug,
       lang: req.query.lang as string,
     };
+
+
+    console.log(params);
+    
 
     const response = await theatersController.getMovieDiffusionInfos(params, res);
 
