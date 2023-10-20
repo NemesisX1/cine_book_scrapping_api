@@ -2,6 +2,7 @@ import createError from 'http-errors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './docs/swagger-output.json';
 import express, { RequestHandler, ErrorRequestHandler  } from 'express';
+import statusMonitor from "express-status-monitor";
 import * as Sentry from "@sentry/node";
 import { ProfilingIntegration } from "@sentry/profiling-node";
 import path from 'path';
@@ -24,6 +25,20 @@ class App {
   }
 
   private config() {
+
+    this.app.use(statusMonitor(
+      {
+        chartVisibility: {
+          cpu: false,
+          mem: false,
+          load: false,
+          heap: false,
+          responseTime: true,
+          rps: true,
+          statusCodes: true
+        },
+      }
+    ));
    
     // sentry configuration for api performance monitoring
     if (process.env.SENTRY_DSN) {
