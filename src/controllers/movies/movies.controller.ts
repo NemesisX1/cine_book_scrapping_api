@@ -1,6 +1,6 @@
 import { getLogger } from "log4js";
 import BaseController from "../abstracts/base.controller";
-import ScrappingService from "@/services/scapping/scrapping.servive";
+import ScrappingService from "../../services/scapping/scrapping.servive";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { Response } from "express";
 
