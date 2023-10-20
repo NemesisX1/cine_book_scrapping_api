@@ -36,6 +36,8 @@
 * [X] Handling language support when fetching theater informations
 * [X] Fetching movies of the current week by theaters
 * [X] Fetching movies diffusion informations by theaters
+* [ ] Fetching current avalaible movies (on the main page https://www.canalolympia.com)
+* [ ] Handling language support when fetching current avalaible movies (on the main page https://www.canalolympia.com)
 * [ ] Fetching avalaible theaters with escape game
 * [ ] Handling language support when fetching avalaible theaters with escape game
 * [ ] Fetching escape game activities informations (name, hours, difficulties ? and other related informations)
