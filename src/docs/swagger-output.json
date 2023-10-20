@@ -96,6 +96,13 @@
             }
           },
           {
+            "name": "theater",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "lang",
             "in": "query",
             "schema": {

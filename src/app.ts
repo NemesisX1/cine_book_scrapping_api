@@ -28,6 +28,7 @@ class App {
 
     this.app.use(statusMonitor(
       {
+        title: 'Canal Olympia API Status',
         chartVisibility: {
           cpu: false,
           mem: false,
