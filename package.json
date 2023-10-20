@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prestart": "ts-node src/swagger.ts",
+    "predev": "ts-node src/swagger.ts",
     "start": "export NODE_OPTIONS='--trace-deprecation --abort-on-uncaught-exception' && export NODE_ENV=development && ts-node ./bin/www.ts",
     "dev": "nodemon --exec ts-node ./bin/www.ts",
     "build": "sh etc/build.sh",

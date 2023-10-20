@@ -65,8 +65,9 @@ class App {
 
     this.app.use('/', indexRouter);
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-    this.app.use('/theaters', theatersRouter);
     this.app.use('/movies', moviesRouter);
+    this.app.use('/theaters', theatersRouter);
+    
   
   }
 

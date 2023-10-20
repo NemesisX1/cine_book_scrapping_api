@@ -9,18 +9,8 @@
   "paths": {
     "/": {
       "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/theaters/names": {
-      "get": {
         "tags": [
-          "Theaters"
+          "Base"
         ],
         "description": "",
         "responses": {
@@ -30,10 +20,10 @@
         }
       }
     },
-    "/theaters/movies/{theater}": {
+    "/movies/{theater}": {
       "get": {
         "tags": [
-          "Theaters"
+          "Movies"
         ],
         "description": "",
         "parameters": [
@@ -60,10 +50,10 @@
         }
       }
     },
-    "/theaters/movie-infos/{slug}": {
+    "/movies/infos/{slug}": {
       "get": {
         "tags": [
-          "Theaters"
+          "Movies"
         ],
         "description": "",
         "parameters": [
@@ -90,7 +80,50 @@
         }
       }
     },
-    "/theaters/movie-diffusion-infos/{slug}": {
+    "/movies/diffusion-infos/{slug}": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/theaters/names": {
+      "get": {
+        "tags": [
+          "Theaters"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/theaters/infos/{theater}": {
       "get": {
         "tags": [
           "Theaters"
@@ -98,7 +131,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "slug",
+            "name": "theater",
             "in": "path",
             "required": true,
             "schema": {

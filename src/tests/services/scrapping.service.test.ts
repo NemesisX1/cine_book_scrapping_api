@@ -47,6 +47,17 @@ describe('Test on Scapping Service', () => {
     });
 
 
+    test('if movieInfoBySlug is working', async () => {
+
+        return scrappingService.movieInfoBySlug('banel-adama').then((info) => {
+
+            expect(info).not.toBeNull();
+
+        });
+
+    });
+
+
     test('if movieInfoBySlug is working for en lang', async () => {
 
         return scrappingService.movieInfoBySlug('lexorciste-devotion', 'en').then((info) => {
