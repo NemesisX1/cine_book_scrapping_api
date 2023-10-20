@@ -4,9 +4,7 @@ import request from 'supertest';
 
 describe('Testing theaters routes', () => {
 
-    const reqApp = request(app, {
-        
-    });
+    const reqApp = request(app);
     
     test('if /GET is working', async () => {
 
