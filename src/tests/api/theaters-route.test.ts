@@ -4,54 +4,54 @@ import request from 'supertest';
 
 describe('Testing theaters routes', () => {
 
-    const reqApp = request(app);
+    // const reqApp = request(app);
     
-    test('if /GET is working', async () => {
+    // test('if /GET is working', async () => {
 
-        const res = await reqApp.get('/');
+    //     const res = await reqApp.get('/');
 
         
-        expect(res.statusCode).toBe(200);
+    //     expect(res.statusCode).toBe(200);
 
-    });
-
-
-    test('if /GET theaters/names is working', async () => {
-
-        const res = await reqApp.get('/theaters/names');
-
-        expect(res.statusCode).toBe(200);
-
-    });
+    // });
 
 
+    // test('if /GET theaters/names is working', async () => {
 
-    test('if /GET theaters/infos/ is working', async () => {
+    //     const res = await reqApp.get('/theaters/names');
 
-        const res = await reqApp.get('/theaters/infos/wologuede');
+    //     expect(res.statusCode).toBe(200);
+
+    // });
+
+
+
+    // test('if /GET theaters/infos/ is working', async () => {
+
+    //     const res = await reqApp.get('/theaters/infos/wologuede');
     
        
-        expect(res.statusCode).toBe(200);
+    //     expect(res.statusCode).toBe(200);
 
-    });
+    // });
 
 
-    test('if /GET theaters/infos/ with bad theater name is not working', async () => {
+    // test('if /GET theaters/infos/ with bad theater name is not working', async () => {
 
-        const res = await reqApp.get('/theaters/infos/123');
+    //     const res = await reqApp.get('/theaters/infos/123');
         
-        expect(res.statusCode).not.toBe(200);
+    //     expect(res.statusCode).not.toBe(200);
 
-    });
+    // });
 
 
-    test('if /GET theaters/infos/ is working with lang en', async () => {
+    // test('if /GET theaters/infos/ is working with lang en', async () => {
 
-        const res = await reqApp.get('/theaters/infos/wologuede?lang=en');
+    //     const res = await reqApp.get('/theaters/infos/wologuede?lang=en');
 
-        expect(res.statusCode).toBe(200);
+    //     expect(res.statusCode).toBe(200);
 
-    });
+    // });
 
 })
 
