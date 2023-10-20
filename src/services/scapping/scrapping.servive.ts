@@ -187,10 +187,7 @@ export default class ScrappingService implements BaseService {
 
         sessionsInfos?.childNodes.forEach((element) => {
 
-            const e = element as HTMLElement;
-
-            console.log(e.rawAttributes);
-            
+            const e = element as HTMLElement;   
 
             if (e.localName === 'div' && (theaterName ? e.rawAttributes['data-name'] == theaterName : true)) {
 

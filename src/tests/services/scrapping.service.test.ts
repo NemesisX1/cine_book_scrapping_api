@@ -98,9 +98,7 @@ describe('Test on Scapping Service', () => {
     test('if movieDiffusionInfos is working with theater', async () => {
 
         return scrappingService.movieDiffusionInfos('lexorciste-devotion', 'fr', 'wologuede').then((infos) => {
-
-            console.log(infos);
-            
+        
             expect(infos.length).toBeGreaterThan(0);
 
         });
