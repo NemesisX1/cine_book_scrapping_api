@@ -9,7 +9,6 @@ describe('Testing theaters routes', () => {
 
         const res = await reqApp.get('/');
 
-        
         expect(res.statusCode).toBe(200);
 
     });

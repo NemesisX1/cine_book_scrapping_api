@@ -1,4 +1,4 @@
-import TheaterEventBriefModel from '@/models/theater-event-brief.model';
+import TheaterMovieBriefModel from '@/models/theater-movie-brief.model';
 import app from '../../app';
 import request from 'supertest';
 
@@ -13,10 +13,9 @@ describe('Testing movies routes', () => {
 
         const res = await reqApp.get('/movies/wologuede');
 
-        testingMovieSlug = (res.body as TheaterEventBriefModel[])[0].slug;
+        testingMovieSlug = (res.body as TheaterMovieBriefModel[])[0].slug;
 
         expect(res.statusCode).toBe(200);
-
 
     });
 
@@ -79,9 +78,17 @@ describe('Testing movies routes', () => {
 
         const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?theater=wologuede`);
 
-        console.log(res.body);
-        
-        expect(res.statusCode).toBe(200);
+      expect(res.statusCode).toBe(200);
+
+    });
+
+
+
+    test('if /GET /movies/diffusion-infos/ is not working with bad theater name', async () => {
+
+        const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?theater=zki`);
+
+        expect(res.statusCode).not.toBe(200);
 
     });
 

@@ -5,6 +5,8 @@ const scrappingService = new ScrappingService();
 
 describe('Test on Scapping Service', () => {
 
+    let testingMovieSlug: string;
+
     test('if theatersNames is working', () => {
 
         const names = scrappingService.theatersNames();
@@ -28,6 +30,8 @@ describe('Test on Scapping Service', () => {
 
         return scrappingService.movies('wologuede', 'en').then((movies) => {
 
+            testingMovieSlug = movies[0].slug;
+
             expect(movies.length).toBeGreaterThan(0);
 
         });
@@ -38,7 +42,7 @@ describe('Test on Scapping Service', () => {
 
     test('if movieInfoBySlug is working', async () => {
 
-        return scrappingService.movieInfoBySlug('lexorciste-devotion').then((info) => {
+        return scrappingService.movieInfoBySlug(testingMovieSlug).then((info) => {
 
             expect(info).not.toBeNull();
 
@@ -46,23 +50,23 @@ describe('Test on Scapping Service', () => {
 
     });
 
-
-    test('if movieInfoBySlug is working', async () => {
-
-        return scrappingService.movieInfoBySlug('banel-adama').then((info) => {
-
-            expect(info).not.toBeNull();
-
-        });
-
-    });
 
 
     test('if movieInfoBySlug is working for en lang', async () => {
 
-        return scrappingService.movieInfoBySlug('lexorciste-devotion', 'en').then((info) => {
+        return scrappingService.movieInfoBySlug(testingMovieSlug, 'en').then((info) => {
 
             expect(info).not.toBeNull();
+
+        });
+
+    });
+
+    test('if movieInfoBySlug is not working with bad slug', async () => {
+
+        return scrappingService.movieInfoBySlug('zkk').then((info) => {
+
+            expect(info).toBeNull();
 
         });
 
@@ -71,11 +75,11 @@ describe('Test on Scapping Service', () => {
 
     test('if movieInfoBySlug is and getting the brief information without the \'read more\'', async () => {
 
-        return scrappingService.movieInfoBySlug('lexorciste-devotion').then((info) => {
+        return scrappingService.movieInfoBySlug(testingMovieSlug).then((info) => {
 
-            expect(info.descriptionBrief).not.toBeNull();
+            expect(info!.descriptionBrief).not.toBeNull();
 
-            const hasReadMore = info.descriptionBrief.includes('Lire la suite');
+            const hasReadMore = info!.descriptionBrief.includes('Lire la suite');
 
             expect(hasReadMore).not.toBe(true);
 
@@ -86,7 +90,7 @@ describe('Test on Scapping Service', () => {
 
     test('if movieDiffusionInfos is working', async () => {
 
-        return scrappingService.movieDiffusionInfos('lexorciste-devotion').then((infos) => {
+        return scrappingService.movieDiffusionInfos(testingMovieSlug).then((infos) => {
 
             expect(infos.length).toBeGreaterThan(0);
 
@@ -97,10 +101,20 @@ describe('Test on Scapping Service', () => {
 
     test('if movieDiffusionInfos is working with theater', async () => {
 
-        return scrappingService.movieDiffusionInfos('lexorciste-devotion', 'fr', 'wologuede').then((infos) => {
+        return scrappingService.movieDiffusionInfos(testingMovieSlug, 'fr', 'wologuede').then((infos) => {
         
-            expect(infos.length).toBeGreaterThan(0);
+            expect(infos.length).toBe(1);
 
+        });
+
+    });
+
+
+    test('if movieDiffusionInfos is not working with bad theater', async () => {
+
+        return scrappingService.movieDiffusionInfos(testingMovieSlug, 'fr', 'zkk').then((infos) => {
+        
+            expect(infos.length).toBe(0);
         });
 
     });
@@ -108,14 +122,13 @@ describe('Test on Scapping Service', () => {
 
     test('if movieDiffusionInfos is working for en lang', async () => {
 
-        return scrappingService.movieDiffusionInfos('lexorciste-devotion', 'en').then((infos) => {
+        return scrappingService.movieDiffusionInfos(testingMovieSlug, 'en').then((infos) => {
 
             expect(infos.length).toBeGreaterThan(0);
 
         });
 
     });
-
 
 
     test('if theaterInfos is working', async () => {

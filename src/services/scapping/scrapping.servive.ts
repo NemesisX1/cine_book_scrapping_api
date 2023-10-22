@@ -3,9 +3,9 @@ import BaseService from "../abstracts/base.service";
 import { HTMLElement, parse } from 'node-html-parser';
 import theatersUrls from '../../../data/theaters.json'
 import puppeteer from 'puppeteer';
-import TheaterEventModel from "../../models/theater-event.model";
-import TheaterEventBriefModel from "../../models/theater-event-brief.model";
-import TheaterDiffusionInfoModel from "../../models/theater-diffusion-info.model";
+import TheaterMovieModel from "../../models/theater-movie.model";
+import TheaterMovieBriefModel from "../../models/theater-movie-brief.model";
+import TheaterDiffusionInfoModel from "../../models/theater-movie-diffusion-info.model";
 import TheaterInfosModel from "../../models/theater-info.model";
 
 export default class ScrappingService implements BaseService {
@@ -33,7 +33,7 @@ export default class ScrappingService implements BaseService {
      * getMoviesInfos
      * lang can be either fr or en
      */
-    public async movies(theaterName: string, lang: string = 'fr'): Promise<TheaterEventBriefModel[]> {
+    public async movies(theaterName: string, lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
 
         const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
         const page = await browser.newPage();
@@ -56,7 +56,7 @@ export default class ScrappingService implements BaseService {
 
         const elements = await page.$$('ul[data-date].theater-movies');
 
-        const result: TheaterEventBriefModel[] = [];
+        const result: TheaterMovieBriefModel[] = [];
 
 
         /// TODO: reduce complexity by using in a more efficient way the html parser and its querySelector
@@ -106,7 +106,7 @@ export default class ScrappingService implements BaseService {
      * getMovieInfoBySlug
      * lang can be either fr or en
      */
-    public async movieInfoBySlug(slug: string, lang: string = 'fr'): Promise<TheaterEventModel> {
+    public async movieInfoBySlug(slug: string, lang: string = 'fr'): Promise<TheaterMovieModel | null> {
 
         const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
         const page = await browser.newPage();
@@ -132,6 +132,9 @@ export default class ScrappingService implements BaseService {
         const htmlRoot = parse(await page.content());
 
         const title = htmlRoot.querySelector('div.movie-top-container-cover-content > h1')?.textContent;
+
+        if (!title) return null;
+
         const genre = htmlRoot.querySelector('div.movie-top-container-cover-content > p.genres > span')?.textContent.split(':').pop()?.trim();
         const date = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.date')?.textContent.split(':').pop()?.trim();
         const duration = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.time')?.textContent.split(':').pop()?.trim();
@@ -139,7 +142,8 @@ export default class ScrappingService implements BaseService {
         const brief = htmlRoot.querySelector('div.synopse-modal > p')?.textContent;
         const trailerUrl = htmlRoot.querySelector('div.wrapper > div.movie > iframe')?.rawAttributes.src;
 
-        const theaterEvent: TheaterEventModel = {
+    
+        const TheaterMovie: TheaterMovieModel = {
             title: title!,
             genre: genre!,
             duration: duration!,
@@ -150,7 +154,7 @@ export default class ScrappingService implements BaseService {
 
         await browser.close();
 
-        return theaterEvent;
+        return TheaterMovie;
     }
 
 

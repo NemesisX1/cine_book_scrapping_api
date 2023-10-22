@@ -1,4 +1,4 @@
-export default interface TheaterDiffusionInfoModel {
+export default interface TheaterMovieDiffusionInfoModel {
     theater: string,
     dates: {
         weekDay: string,
