@@ -346,6 +346,49 @@
               }
             }
           },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "this slug was not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "this slug was not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
           "422": {
             "description": "Your body was bad formatted",
             "content": {
@@ -486,6 +529,179 @@
               "application/xml": {
                 "schema": {
                   "$ref": "#/components/schemas/TheaterMovieDiffusionInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. It also give the same answers when he didn't find the given theater",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "This slug or theater was not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "This slug or theater was not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Your body was bad formatted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
                 }
               }
             }

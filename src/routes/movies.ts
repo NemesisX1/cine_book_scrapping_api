@@ -194,7 +194,7 @@ router.get(
             }
 
             #swagger.responses[400] = {
-                description: 'Bad request. It also give the same answers when he didn't find the given theater',
+                description: 'Bad request. It also give the same answers when he didn\'t find the given theater',
                 schema: {
                     message: 'Bad request',
                     errors: 'any'
