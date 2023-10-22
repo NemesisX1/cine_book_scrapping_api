@@ -74,7 +74,14 @@ export default class MoviesController implements BaseController {
         try {
             
             const infos = await this.scrappingService.movieDiffusionInfos(params.slug, params.lang, params.theater);
-            
+
+            if (infos.length == 0) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: `This movie diffusion info at ${params.theater} was not found`,
+                    errors : []
+                })
+            }
+
             return res.status(StatusCodes.OK).json(infos);
 
         } catch (error) {

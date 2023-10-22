@@ -106,7 +106,7 @@ export default class ScrappingService implements BaseService {
      * getMovieInfoBySlug
      * lang can be either fr or en
      */
-    public async movieInfoBySlug(slug: string, lang: string = 'fr'): Promise<TheaterMovieModel> {
+    public async movieInfoBySlug(slug: string, lang: string = 'fr'): Promise<TheaterMovieModel | null> {
 
         const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
         const page = await browser.newPage();
@@ -132,6 +132,9 @@ export default class ScrappingService implements BaseService {
         const htmlRoot = parse(await page.content());
 
         const title = htmlRoot.querySelector('div.movie-top-container-cover-content > h1')?.textContent;
+
+        if (!title) return null;
+
         const genre = htmlRoot.querySelector('div.movie-top-container-cover-content > p.genres > span')?.textContent.split(':').pop()?.trim();
         const date = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.date')?.textContent.split(':').pop()?.trim();
         const duration = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.time')?.textContent.split(':').pop()?.trim();
@@ -139,6 +142,7 @@ export default class ScrappingService implements BaseService {
         const brief = htmlRoot.querySelector('div.synopse-modal > p')?.textContent;
         const trailerUrl = htmlRoot.querySelector('div.wrapper > div.movie > iframe')?.rawAttributes.src;
 
+    
         const TheaterMovie: TheaterMovieModel = {
             title: title!,
             genre: genre!,

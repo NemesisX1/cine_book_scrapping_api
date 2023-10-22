@@ -84,11 +84,11 @@ describe('Testing movies routes', () => {
 
 
 
-    test('if /GET /movies/diffusion-infos/ is not  working with bad theater name', async () => {
+    test('if /GET /movies/diffusion-infos/ is not working with bad theater name', async () => {
 
         const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?theater=zki`);
 
-      expect(res.statusCode).not.toBe(200);
+        expect(res.statusCode).not.toBe(200);
 
     });
 

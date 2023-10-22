@@ -123,6 +123,14 @@ router.get(
                     errors: 'any'
                 }
             }
+
+            #swagger.responses[404] = {
+                description: 'Not found',
+                schema: {
+                    message: 'this slug was not found',
+                    errors: []
+                }
+            }
             
             #swagger.responses[422] = {
                 description: 'Your body was bad formatted',
@@ -177,7 +185,6 @@ router.get(
                     '@enum': ['fr', 'en']
                 }
             }
-           
 
             #swagger.responses[200] = {
                 description: 'OK',
@@ -194,6 +201,15 @@ router.get(
                 }
             }
             
+            #swagger.responses[404] = {
+                description: 'Not found',
+                schema: {
+                    message: 'This slug or theater was not found',
+                    errors: []
+                }
+            }
+            
+
             #swagger.responses[422] = {
                 description: 'Your body was bad formatted',
                 schema: {
