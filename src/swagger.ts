@@ -12,7 +12,7 @@ const doc = {
         license: {
             name: 'MIT Licence',
             url: 'https://github.com/NemesisX1/canal_olympia_scrapping_api/blob/main/LICENSE.md'
-        }
+        },
     },
     tags: [
         {

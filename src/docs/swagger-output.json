@@ -7,6 +7,9 @@
     "license": {
       "name": "MIT Licence",
       "url": "https://github.com/NemesisX1/canal_olympia_scrapping_api/blob/main/LICENSE.md"
+    },
+    "servers": {
+      "url": "http://51.91.76.77:3123"
     }
   },
   "tags": [
@@ -1191,6 +1194,5 @@
         }
       }
     }
-  },
-  "url": "http://51.91.76.77:3123"
+  }
 }
