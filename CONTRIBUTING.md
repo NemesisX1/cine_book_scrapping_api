@@ -15,14 +15,14 @@
 
 - Star this repository
 - Complete the swagger documentation ([link](https://swagger-autogen.github.io/docs/))
-- Technical articles about this api
-- Fixing typos when you notice ones
-- Fixing issues
-- Adding features
+- Write technical articles about this api
+- Fix typos when you notice ones
+- Fix issues
 - Create API clients
 - Build projects
 - Suggest features
-- Adding more tests
+- Add more tests
+- Add features
 
 ## Roadmap
 
