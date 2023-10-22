@@ -12,6 +12,9 @@ const doc = {
         license: {
             name: 'MIT Licence',
             url: 'https://github.com/NemesisX1/canal_olympia_scrapping_api/blob/main/LICENSE.md'
+        },
+        servers: {
+            url: process.env.BASE_API_URL,
         }
     },
     tags: [
@@ -97,7 +100,4 @@ const endpointsFiles = [
     path.join(__dirname, 'app.ts'),
 ];
 
-swaggerAutogen({ openapi: '3.0.0' })(outputFile, endpointsFiles, {
-    ...doc,
-    host: process.env.BASE_API_URL
-});
+swaggerAutogen({ openapi: '3.0.0' })(outputFile, endpointsFiles, {doc});

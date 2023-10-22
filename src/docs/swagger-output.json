@@ -2,28 +2,14 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "Canal Olympia Scrapping REST API",
-    "description": "",
-    "license": {
-      "name": "MIT Licence",
-      "url": "https://github.com/NemesisX1/canal_olympia_scrapping_api/blob/main/LICENSE.md"
-    }
+    "title": "REST API",
+    "description": ""
   },
-  "tags": [
+  "servers": [
     {
-      "name": "/",
-      "description": ""
-    },
-    {
-      "name": "Theaters",
-      "description": "Fetch theaters informations"
-    },
-    {
-      "name": "Movies",
-      "description": "Fetch movies informations"
+      "url": "http://localhost:3000/"
     }
   ],
-  "securityDefinitions": {},
   "paths": {
     "/": {
       "get": {
@@ -1022,174 +1008,89 @@
       }
     }
   },
-  "components": {
-    "schemas": {
+  "doc": {
+    "info": {
+      "version": "",
+      "title": "Canal Olympia Scrapping REST API",
+      "description": "",
+      "license": {
+        "name": "MIT Licence",
+        "url": "https://github.com/NemesisX1/canal_olympia_scrapping_api/blob/main/LICENSE.md"
+      },
+      "servers": {
+        "url": "http://51.91.76.77:3123"
+      }
+    },
+    "tags": [
+      {
+        "name": "/",
+        "description": ""
+      },
+      {
+        "name": "Theaters",
+        "description": "Fetch theaters informations"
+      },
+      {
+        "name": "Movies",
+        "description": "Fetch movies informations"
+      }
+    ],
+    "basePath": "/",
+    "schemes": [],
+    "consumes": [],
+    "produces": [],
+    "securityDefinitions": {},
+    "definitions": {
       "TheaterMovie": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "The Creator"
-          },
-          "slug": {
-            "type": "string",
-            "example": "the-creator"
-          },
-          "genre": {
-            "type": "string",
-            "example": "Horror"
-          },
-          "duration": {
-            "type": "string",
-            "example": "1h20"
-          },
-          "releaseDate": {
-            "type": "string",
-            "example": "10-10-2023"
-          },
-          "descriptionBrief": {
-            "type": "string",
-            "example": "This is a nice movie"
-          },
-          "trailerLink": {
-            "type": "string",
-            "example": "https://example.com"
-          }
-        },
-        "xml": {
-          "name": "TheaterMovie"
-        }
+        "title": "The Creator",
+        "slug": "the-creator",
+        "genre": "Horror",
+        "duration": "1h20",
+        "releaseDate": "10-10-2023",
+        "descriptionBrief": "This is a nice movie",
+        "trailerLink": "https://example.com"
       },
       "TheaterMovieBrief": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "The Creator"
-          },
-          "slug": {
-            "type": "string",
-            "example": "the-creator"
-          },
-          "date": {
-            "type": "string",
-            "example": "10-10-2023"
-          },
-          "hour": {
-            "type": "string",
-            "example": "1h12"
-          },
-          "language": {
-            "type": "string",
-            "example": "en"
-          },
-          "img": {
-            "type": "string",
-            "example": "https://example.com"
-          },
-          "url": {
-            "type": "string",
-            "example": "https://example.com"
-          }
-        },
-        "xml": {
-          "name": "TheaterMovieBrief"
-        }
+        "title": "The Creator",
+        "slug": "the-creator",
+        "date": "10-10-2023",
+        "hour": "1h12",
+        "language": "en",
+        "img": "https://example.com",
+        "url": "https://example.com"
       },
       "TheaterMovieDiffusionInfo": {
-        "type": "object",
-        "properties": {
-          "theater": {
-            "type": "string",
-            "example": "wologuede"
-          },
-          "dates": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "weekDay": {
-                  "type": "string",
-                  "example": "Mar"
-                },
-                "weekNumber": {
-                  "type": "string",
-                  "example": "23"
-                },
-                "hours": {
-                  "type": "array",
-                  "example": [
-                    "10:40",
-                    "10:50"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+        "theater": "wologuede",
+        "dates": [
+          {
+            "weekDay": "Mar",
+            "weekNumber": "23",
+            "hours": [
+              "10:40",
+              "10:50"
+            ]
           }
-        },
-        "xml": {
-          "name": "TheaterMovieDiffusionInfo"
-        }
+        ]
       },
       "TheaterInfos": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "wologuede"
-          },
-          "lang": {
-            "type": "string",
-            "example": "en"
-          },
-          "location": {
-            "type": "string",
-            "example": "Cotonou"
-          },
-          "locationUrl": {
-            "type": "string",
-            "example": "https://example.com"
-          },
-          "pricing": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "string",
-                  "example": "Children"
-                },
-                "price": {
-                  "type": "string",
-                  "example": "1500 XOF"
-                }
-              }
-            }
-          },
-          "media": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Canal Olympia"
-                },
-                "link": {
-                  "type": "string",
-                  "example": "https://example.com"
-                }
-              }
-            }
+        "name": "wologuede",
+        "lang": "en",
+        "location": "Cotonou",
+        "locationUrl": "https://example.com",
+        "pricing": [
+          {
+            "people": "Children",
+            "price": "1500 XOF"
           }
-        },
-        "xml": {
-          "name": "TheaterInfos"
-        }
+        ],
+        "media": [
+          {
+            "title": "Canal Olympia",
+            "link": "https://example.com"
+          }
+        ]
       }
-    }
+    },
+    "components": {}
   }
 }
