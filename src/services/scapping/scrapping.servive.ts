@@ -52,7 +52,7 @@ export default class ScrappingService implements BaseService {
         const aMovieList = htmlRoot.querySelectorAll('section.homepage-affiche > div.wrapper > div.homepage-affiche-list > a.homepage-affiche-list-movie');
         
         aMovieList.forEach((e) => {
-            const url =  e.querySelector('a')?.rawAttributes.href ?? '';
+            const url =  e.rawAttributes.href ?? '';
 
             const title = e.querySelector('article > h1')?.textContent!;
             const imageUrl =  e.querySelector('article > figure > img')?.rawAttributes.src ?? null;
