@@ -16,13 +16,13 @@ export default class MoviesController implements BaseController {
        
         try {
             
-            const movies = await this.scrappingService.movies(params.theaterName, params.lang);
+            const movies = await this.scrappingService.theaterMovies(params.theaterName, params.lang);
 
             if (movies.length == 0) {
                 return res.status(StatusCodes.NOT_FOUND).json({
                     message: `${params.theaterName} was not found`,
                     errors : []
-                })
+                });
             }
 
             return res.status(StatusCodes.OK).json(movies);
@@ -48,9 +48,16 @@ export default class MoviesController implements BaseController {
        
         try {
             
-            const infos = await this.scrappingService.movieInfoBySlug(params.slug, params.lang,);
+            const info = await this.scrappingService.movieInfoBySlug(params.slug, params.lang,);
             
-            return res.status(StatusCodes.OK).json(infos);
+            if (!info) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: `This movie slug was not found`,
+                    errors : []
+                })
+            };
+
+            return res.status(StatusCodes.OK).json(info);
 
         } catch (error) {
            
