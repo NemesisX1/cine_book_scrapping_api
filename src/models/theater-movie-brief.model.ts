@@ -1,4 +1,4 @@
-export default interface TheaterEventBriefModel {
+export default interface TheaterMovieBriefModel {
     date: string,
     hour: string,
     language: string,

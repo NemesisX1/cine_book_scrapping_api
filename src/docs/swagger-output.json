@@ -3,19 +3,38 @@
   "info": {
     "version": "1.0.0",
     "title": "Canal Olympia Scrapping REST API",
-    "description": ""
+    "description": "",
+    "license": {
+      "name": "MIT Licence",
+      "url": "https://github.com/NemesisX1/canal_olympia_scrapping_api/blob/main/LICENSE.md"
+    }
   },
+  "tags": [
+    {
+      "name": "/",
+      "description": ""
+    },
+    {
+      "name": "Theaters",
+      "description": "Fetch theaters informations"
+    },
+    {
+      "name": "Movies",
+      "description": "Fetch movies informations"
+    }
+  ],
   "securityDefinitions": {},
   "paths": {
     "/": {
       "get": {
         "tags": [
-          "Base"
+          "/"
         ],
+        "summary": "",
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -25,7 +44,8 @@
         "tags": [
           "Movies"
         ],
-        "description": "",
+        "summary": "Fetch all the available movies at a given theater",
+        "description": "Fetch all the available movies at a given theater",
         "parameters": [
           {
             "name": "theater",
@@ -38,14 +58,204 @@
           {
             "name": "lang",
             "in": "query",
+            "description": "The response language",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "fr",
+                "en"
+              ]
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterMovieBrief"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterMovieBrief"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Theater not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Theater not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Your body was bad formatted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -55,7 +265,8 @@
         "tags": [
           "Movies"
         ],
-        "description": "",
+        "summary": "Fetch movie informations for a given movie slug",
+        "description": "Fetch movie informations for a given movie slug",
         "parameters": [
           {
             "name": "slug",
@@ -68,14 +279,161 @@
           {
             "name": "lang",
             "in": "query",
+            "description": "The response language",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "fr",
+                "en"
+              ]
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterMovie"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterMovie"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Your body was bad formatted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -85,7 +443,8 @@
         "tags": [
           "Movies"
         ],
-        "description": "",
+        "summary": "Fetch movie diffusion informations for a given movie slug",
+        "description": "Fetch movie diffusion informations for a given movie slug",
         "parameters": [
           {
             "name": "slug",
@@ -105,14 +464,161 @@
           {
             "name": "lang",
             "in": "query",
+            "description": "The response language",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "fr",
+                "en"
+              ]
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterMovieDiffusionInfo"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterMovieDiffusionInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Your body was bad formatted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -122,10 +628,88 @@
         "tags": [
           "Theaters"
         ],
-        "description": "",
+        "summary": "Fetch all the available theaters name",
+        "description": "Return an array of strings with the theaters name",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "wologuede"
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "wologuede"
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -135,7 +719,8 @@
         "tags": [
           "Theaters"
         ],
-        "description": "",
+        "summary": "Fetch informations about a specified theater giving his name",
+        "description": "Fetch informations about a specified theater giving his name",
         "parameters": [
           {
             "name": "theater",
@@ -148,15 +733,375 @@
           {
             "name": "lang",
             "in": "query",
+            "description": "The response language",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "fr",
+                "en"
+              ]
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterInfos"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterInfos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Theater not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Theater not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Your body was bad formatted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TheaterMovie": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "The Creator"
+          },
+          "slug": {
+            "type": "string",
+            "example": "the-creator"
+          },
+          "genre": {
+            "type": "string",
+            "example": "Horror"
+          },
+          "duration": {
+            "type": "string",
+            "example": "1h20"
+          },
+          "releaseDate": {
+            "type": "string",
+            "example": "10-10-2023"
+          },
+          "descriptionBrief": {
+            "type": "string",
+            "example": "This is a nice movie"
+          },
+          "trailerLink": {
+            "type": "string",
+            "example": "https://example.com"
+          }
+        },
+        "xml": {
+          "name": "TheaterMovie"
+        }
+      },
+      "TheaterMovieBrief": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "The Creator"
+          },
+          "slug": {
+            "type": "string",
+            "example": "the-creator"
+          },
+          "date": {
+            "type": "string",
+            "example": "10-10-2023"
+          },
+          "hour": {
+            "type": "string",
+            "example": "1h12"
+          },
+          "language": {
+            "type": "string",
+            "example": "en"
+          },
+          "img": {
+            "type": "string",
+            "example": "https://example.com"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://example.com"
+          }
+        },
+        "xml": {
+          "name": "TheaterMovieBrief"
+        }
+      },
+      "TheaterMovieDiffusionInfo": {
+        "type": "object",
+        "properties": {
+          "theater": {
+            "type": "string",
+            "example": "wologuede"
+          },
+          "dates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "weekDay": {
+                  "type": "string",
+                  "example": "Mar"
+                },
+                "weekNumber": {
+                  "type": "string",
+                  "example": "23"
+                },
+                "hours": {
+                  "type": "array",
+                  "example": [
+                    "10:40",
+                    "10:50"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "TheaterMovieDiffusionInfo"
+        }
+      },
+      "TheaterInfos": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "wologuede"
+          },
+          "lang": {
+            "type": "string",
+            "example": "en"
+          },
+          "location": {
+            "type": "string",
+            "example": "Cotonou"
+          },
+          "locationUrl": {
+            "type": "string",
+            "example": "https://example.com"
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "string",
+                  "example": "Children"
+                },
+                "price": {
+                  "type": "string",
+                  "example": "1500 XOF"
+                }
+              }
+            }
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Canal Olympia"
+                },
+                "link": {
+                  "type": "string",
+                  "example": "https://example.com"
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "TheaterInfos"
         }
       }
     }

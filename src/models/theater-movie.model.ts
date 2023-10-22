@@ -1,4 +1,4 @@
-export default interface TheaterEventModel {
+export default interface TheaterMovieModel {
  
     title: string,
     slug?: string,
