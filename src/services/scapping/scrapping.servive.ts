@@ -23,7 +23,7 @@ export default class ScrappingService implements BaseService {
         slug: string
     }[]> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
         
         try {
@@ -51,21 +51,20 @@ export default class ScrappingService implements BaseService {
 
         const aMovieList = htmlRoot.querySelectorAll('section.homepage-affiche > div.wrapper > div.homepage-affiche-list > a.homepage-affiche-list-movie');
         
-        console.log(aMovieList.length);
-        
         aMovieList.forEach((e) => {
-            const url = e.rawAttributes.href;
+            const url =  e.querySelector('a')?.rawAttributes.href ?? '';
+
             const title = e.querySelector('article > h1')?.textContent!;
             const imageUrl =  e.querySelector('article > figure > img')?.rawAttributes.src ?? null;
 
             result.push({
                 title: title,
                 imageUrl: imageUrl!,
-                slug: ''
-             //   slug: url.split('/').filter((e) => e != '').pop()!,
+                slug: url.split('/').filter((e) => e != '').pop()!,
             })
         })
 
+        await browser.close();
 
         return result;
     }
@@ -94,7 +93,7 @@ export default class ScrappingService implements BaseService {
      */
     public async theaterMovies(theaterName: string, lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
 
         try {
@@ -166,7 +165,7 @@ export default class ScrappingService implements BaseService {
      */
     public async movieInfoBySlug(slug: string, lang: string = 'fr'): Promise<TheaterMovieModel | null> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
 
         const cleanSlug = slug.replace('-en', '');
@@ -218,7 +217,7 @@ export default class ScrappingService implements BaseService {
     */
     public async movieDiffusionInfos(slug: string, lang: string = 'fr', theaterName?: string): Promise<TheaterDiffusionInfoModel[]> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
 
         const cleanSlug = slug.replace('-en', '');
@@ -297,7 +296,7 @@ export default class ScrappingService implements BaseService {
      */
     public async theaterInfos(theaterName: string, lang: string = 'fr'): Promise<TheaterInfosModel> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
 
         const cleanedTheaterName = theaterName.replace('-en', '');
