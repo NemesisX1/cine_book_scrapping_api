@@ -61,7 +61,8 @@ export default class ScrappingService implements BaseService {
             result.push({
                 title: title,
                 imageUrl: imageUrl!,
-                slug: url.split('/').filter((e) => e != '').pop()!,
+                slug: ''
+             //   slug: url.split('/').filter((e) => e != '').pop()!,
             })
         })
 
