@@ -22,6 +22,7 @@
 - Create API clients
 - Build projects
 - Suggest features
+- Adding more tests
 
 ## Roadmap
 
