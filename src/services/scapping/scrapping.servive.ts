@@ -1,12 +1,14 @@
 import { getLogger } from "log4js";
 import BaseService from "../abstracts/base.service";
 import { HTMLElement, parse } from 'node-html-parser';
-import theatersUrls from '../../../data/theaters.json'
 import puppeteer from 'puppeteer';
 import TheaterMovieModel from "../../models/theater-movie.model";
 import TheaterMovieBriefModel from "../../models/theater-movie-brief.model";
 import TheaterDiffusionInfoModel from "../../models/theater-movie-diffusion-info.model";
 import TheaterInfosModel from "../../models/theater-info.model";
+import TheaterNameModel from "@/models/theater-name.model";
+import axios from "axios";
+import * as cheerio from 'cheerio';
 
 export default class ScrappingService implements BaseService {
 
@@ -17,17 +19,81 @@ export default class ScrappingService implements BaseService {
      * getTheatersNames
      */
     // TODO: rewrite this one by fetching theaters list directly from  https://www.xml-sitemaps.com/download/www.canalolympia.com-52d54e4ae/sitemap.xml?view=1
-    public theatersNames(): {name: string}[] {
-        const names: {name: string}[] = [];
+    public async theatersNames(): Promise<TheaterNameModel[]> {
+        const theaters: TheaterNameModel[] = [];
 
-        for (const url of theatersUrls) {
-            names.push({
-                name: url.loc.split('/').filter((e) => e != '').pop()!,
-            });
+        try {
+            const response = await axios.get(infos.baseUrl);
+            const htmlRoot = cheerio.load(response.data);
+
+            // Get all anchor tags inside li elements with the specified class
+            const elements = htmlRoot('li.menu-item.menu-item-type-custom > a');
+
+            for (const element of elements) {
+                const text = htmlRoot(element).text();
+
+                // if the text is empty or does not contain 'CanalOlympia' then skip
+                if (!text || !text.includes('CanalOlympia')) continue;
+
+                // get country, city and theater name
+                const parts = text.split(' – ');
+                const [countryAndCity, theaterName] = parts;
+                const [country, city] = countryAndCity.split(', ');
+                const theaterNameCleaned = theaterName.replace('CanalOlympia ', '');
+
+                // get the slug from the href attribute
+                const slug = htmlRoot(element).attr('href')?.split('/').filter((e) => e != '').pop();
+                const slugCleaned = slug?.includes('activites') ? slug.replace('activites-', '') : slug;
+
+                const countryIndex = theaters.findIndex((e) => e.country == country);
+
+                if (countryIndex == -1) {
+                    // country does not exist, add it
+                    theaters.push({
+                        country: country,
+                        cities: [{
+                            name: city,
+                            'theaters': [
+                                {
+                                    name: theaterNameCleaned,
+                                    slug: slugCleaned!
+                                }
+                            ]
+                        }]
+                    });
+                }
+                else {
+                    // country exists, check if city exists
+                    const cityIndex = theaters[countryIndex].cities.findIndex((e) => e.name == city);
+
+                    if (cityIndex == -1) {
+                        // city does not exist, add it
+                        theaters[countryIndex].cities.push({
+                            name: city,
+                            theaters: [{
+                                name: theaterNameCleaned,
+                                slug: slugCleaned!
+                            }]
+                        });
+                    }
+                    else {
+                        // city exists, add theater to it
+                        theaters[countryIndex].cities[cityIndex].theaters.push({
+                            name: theaterNameCleaned,
+                            slug: slugCleaned!
+                        });
+                    }
+                }
+            }
+        }
+        catch (error) {
+            this.logger.fatal('theater names');
+            this.logger.fatal((error as Error).message);
+
+            throw Error((error as Error).message);
         }
 
-        return names;
-
+        return theaters;
     }
 
 
@@ -144,7 +210,7 @@ export default class ScrappingService implements BaseService {
         const brief = htmlRoot.querySelector('div.synopse-modal > p')?.textContent;
         const trailerUrl = htmlRoot.querySelector('div.wrapper > div.movie > iframe')?.rawAttributes.src;
 
-    
+
         const TheaterMovie: TheaterMovieModel = {
             title: title!,
             genre: genre!,
@@ -193,7 +259,7 @@ export default class ScrappingService implements BaseService {
 
         sessionsInfos?.childNodes.forEach((element) => {
 
-            const e = element as HTMLElement;   
+            const e = element as HTMLElement;
 
             if (e.localName === 'div' && (theaterName ? e.rawAttributes['data-name'] == theaterName : true)) {
 
@@ -214,7 +280,7 @@ export default class ScrappingService implements BaseService {
                         const weekNumber = li.rawAttributes['data-day'];
                         const weekDay = li.querySelector('span.week-day')?.innerText!;
                         const dataHours: string[] = [];
-                        
+
 
                         e.querySelectorAll(`ul[data-day=${weekNumber}] > li`).forEach((e) => {
                             dataHours.push(e.innerText)
@@ -290,7 +356,7 @@ export default class ScrappingService implements BaseService {
             title: string,
             link: string,
         }[] = [];
- 
+
 
         mediaLi.forEach((e) => {
             media.push({

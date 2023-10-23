@@ -7,9 +7,9 @@ describe('Test on Scapping Service', () => {
 
     let testingMovieSlug: string;
 
-    test('if theatersNames is working', () => {
+    test('if theatersNames is working', async () => {
 
-        const names = scrappingService.theatersNames();
+        const names = await scrappingService.theatersNames();
 
         expect(names.length).toBeGreaterThan(0);
 
@@ -102,7 +102,7 @@ describe('Test on Scapping Service', () => {
     test('if movieDiffusionInfos is working with theater', async () => {
 
         return scrappingService.movieDiffusionInfos(testingMovieSlug, 'fr', 'wologuede').then((infos) => {
-        
+
             expect(infos.length).toBe(1);
 
         });
@@ -113,7 +113,7 @@ describe('Test on Scapping Service', () => {
     test('if movieDiffusionInfos is not working with bad theater', async () => {
 
         return scrappingService.movieDiffusionInfos(testingMovieSlug, 'fr', 'zkk').then((infos) => {
-        
+
             expect(infos.length).toBe(0);
         });
 
@@ -134,14 +134,14 @@ describe('Test on Scapping Service', () => {
     test('if theaterInfos is working', async () => {
 
         return scrappingService.theaterInfos('wologuede').then((infos) => {
-    
+
             expect(infos).not.toBeNull();
             expect(infos.name).toBeDefined();
             expect(infos.location).toBeDefined();
             expect(infos.locationUrl).toBeDefined();
             expect(infos.pricing.length).toBeGreaterThan(0);
             expect(infos.media.length).toBeGreaterThan(0);
-            
+
         });
 
     });
