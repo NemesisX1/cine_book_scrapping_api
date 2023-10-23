@@ -6,6 +6,75 @@ import MoviesController from '../controllers/movies/movies.controller';
 const router = express.Router();
 const theatersController = new MoviesController();
 
+
+router.get(
+    '',
+
+    query('lang').default('fr').isIn(['fr', 'en']),
+
+    ExpressValidatorMiddleware,
+
+    async function (req, res, _next) {
+
+        /*
+           #swagger.tags = ['Movies']
+
+           #swagger.parameters['lang'] = {
+               in: 'query',
+           
+               description: 'The response language',
+               schema: {
+                   '@enum': ['fr', 'en']
+               }
+           }
+
+           #swagger.summary = 'Fetch all the available movies'
+           #swagger.description = 'Fetch all the available movies'
+
+           #swagger.responses[200] = {
+               description: 'OK',
+               schema: {
+                   title: "The creator",
+                   url: "https://example.com",
+                   img: "https://example.com",
+                   slug: "the-creator"
+               }
+           }
+
+           #swagger.responses[400] = {
+               description: 'Bad request',
+               schema: {
+                   message: 'Bad request',
+                   errors: 'any'
+               }
+           }
+
+           #swagger.responses[422] = {
+               description: 'Your body was bad formatted',
+               schema: {
+                   message: 'Your body was bad formatted',
+                   errors: [
+                       {
+                           type: 'field',
+                           value: 'zk',
+                           msg: 'Invalid value',
+                           path: 'lang',
+                           location: 'query'
+                       }
+                   ]
+               }
+           }
+       */
+
+        const response = await theatersController.getMovies(req.query.lang as string, res);
+
+        return response;
+
+    }
+
+)
+
+
 router.get(
     '/:theater',
 
@@ -77,7 +146,7 @@ router.get(
             lang: req.query.lang as string,
         };
 
-        const response = await theatersController.getMovies(params, res);
+        const response = await theatersController.getMoviesByTheater(params, res);
 
         return response;
     }
@@ -94,60 +163,60 @@ router.get(
 
     async function (req, res, _next) {
 
-         /*
-            #swagger.tags = ['Movies']
+        /*
+           #swagger.tags = ['Movies']
 
-            #swagger.summary = 'Fetch movie informations for a given movie slug'
-            #swagger.description = 'Fetch movie informations for a given movie slug'
-            
-            #swagger.parameters['lang'] = {
-                in: 'query',
-                description: 'The response language',
-                schema: {
-                    '@enum': ['fr', 'en']
-                }
-            }
+           #swagger.summary = 'Fetch movie informations for a given movie slug'
+           #swagger.description = 'Fetch movie informations for a given movie slug'
            
+           #swagger.parameters['lang'] = {
+               in: 'query',
+               description: 'The response language',
+               schema: {
+                   '@enum': ['fr', 'en']
+               }
+           }
+          
 
-            #swagger.responses[200] = {
-                description: 'OK',
-                schema: {
-                    $ref: '#/definitions/TheaterMovie'
-                }
-            }
+           #swagger.responses[200] = {
+               description: 'OK',
+               schema: {
+                   $ref: '#/definitions/TheaterMovie'
+               }
+           }
 
-            #swagger.responses[400] = {
-                description: 'Bad request',
-                schema: {
-                    message: 'Bad request',
-                    errors: 'any'
-                }
-            }
+           #swagger.responses[400] = {
+               description: 'Bad request',
+               schema: {
+                   message: 'Bad request',
+                   errors: 'any'
+               }
+           }
 
-            #swagger.responses[404] = {
-                description: 'Not found',
-                schema: {
-                    message: 'this slug was not found',
-                    errors: []
-                }
-            }
-            
-            #swagger.responses[422] = {
-                description: 'Your body was bad formatted',
-                schema: {
-                    message: 'Your body was bad formatted',
-                    errors: [
-                        {
-                            type: 'field',
-                            value: 'zk',
-                            msg: 'Invalid value',
-                            path: 'lang',
-                            location: 'query'
-                        }
-                    ]
-                }
-            }
-        */
+           #swagger.responses[404] = {
+               description: 'Not found',
+               schema: {
+                   message: 'this slug was not found',
+                   errors: []
+               }
+           }
+           
+           #swagger.responses[422] = {
+               description: 'Your body was bad formatted',
+               schema: {
+                   message: 'Your body was bad formatted',
+                   errors: [
+                       {
+                           type: 'field',
+                           value: 'zk',
+                           msg: 'Invalid value',
+                           path: 'lang',
+                           location: 'query'
+                       }
+                   ]
+               }
+           }
+       */
 
         const params = {
             slug: req.params.slug,
@@ -172,60 +241,60 @@ router.get(
 
     async function (req, res, _next) {
 
-          /*
-            #swagger.tags = ['Movies']
+        /*
+          #swagger.tags = ['Movies']
 
-            #swagger.summary = 'Fetch movie diffusion informations for a given movie slug'
-            #swagger.description = 'Fetch movie diffusion informations for a given movie slug'
-            
-            #swagger.parameters['lang'] = {
-                in: 'query',
-                description: 'The response language',
-                schema: {
-                    '@enum': ['fr', 'en']
-                }
-            }
+          #swagger.summary = 'Fetch movie diffusion informations for a given movie slug'
+          #swagger.description = 'Fetch movie diffusion informations for a given movie slug'
+          
+          #swagger.parameters['lang'] = {
+              in: 'query',
+              description: 'The response language',
+              schema: {
+                  '@enum': ['fr', 'en']
+              }
+          }
 
-            #swagger.responses[200] = {
-                description: 'OK',
-                schema: {
-                    $ref: '#/definitions/TheaterMovieDiffusionInfo'
-                }
-            }
+          #swagger.responses[200] = {
+              description: 'OK',
+              schema: {
+                  $ref: '#/definitions/TheaterMovieDiffusionInfo'
+              }
+          }
 
-            #swagger.responses[400] = {
-                description: 'Bad request. It also give the same answers when he didn\'t find the given theater',
-                schema: {
-                    message: 'Bad request',
-                    errors: 'any'
-                }
-            }
-            
-            #swagger.responses[404] = {
-                description: 'Not found',
-                schema: {
-                    message: 'This slug or theater was not found',
-                    errors: []
-                }
-            }
-            
+          #swagger.responses[400] = {
+              description: 'Bad request. It also give the same answers when he didn\'t find the given theater',
+              schema: {
+                  message: 'Bad request',
+                  errors: 'any'
+              }
+          }
+          
+          #swagger.responses[404] = {
+              description: 'Not found',
+              schema: {
+                  message: 'This slug or theater was not found',
+                  errors: []
+              }
+          }
+          
 
-            #swagger.responses[422] = {
-                description: 'Your body was bad formatted',
-                schema: {
-                    message: 'Your body was bad formatted',
-                    errors: [
-                        {
-                            type: 'field',
-                            value: 'zk',
-                            msg: 'Invalid value',
-                            path: 'lang',
-                            location: 'query'
-                        }
-                    ]
-                }
-            }
-        */
+          #swagger.responses[422] = {
+              description: 'Your body was bad formatted',
+              schema: {
+                  message: 'Your body was bad formatted',
+                  errors: [
+                      {
+                          type: 'field',
+                          value: 'zk',
+                          msg: 'Invalid value',
+                          path: 'lang',
+                          location: 'query'
+                      }
+                  ]
+              }
+          }
+      */
 
         const params = {
             theater: req.query.theater as string,

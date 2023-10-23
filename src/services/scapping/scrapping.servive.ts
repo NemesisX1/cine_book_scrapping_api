@@ -14,11 +14,61 @@ export default class ScrappingService implements BaseService {
 
 
     /**
+     * availableMovies
+     * lang can be either fr or en
+     */
+    public async availableMovies(lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
+
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+        const page = await browser.newPage();
+        
+        try {
+
+            await page.goto(
+                lang == 'en'
+                    ? `${infos.baseUrl}/en`
+                    : `${infos.baseUrl}`);
+
+        } catch (error) {
+
+            this.logger.fatal('availableMovies');
+            this.logger.fatal((error as Error).message);
+
+            throw Error((error as Error).message);
+        }
+
+        const result: TheaterMovieBriefModel[] = [];
+
+        const htmlRoot = parse(await page.content());
+
+        const aMovieList = htmlRoot.querySelectorAll('section.homepage-affiche > div.wrapper > div.homepage-affiche-list > a.homepage-affiche-list-movie');
+        
+        aMovieList.forEach((e) => {
+            const url =  e.rawAttributes.href ?? '/';
+
+            const title = e.querySelector('article > h1')?.textContent!;
+            const imageUrl =  e.querySelector('article > figure > img')?.rawAttributes.src ?? null;
+
+            result.push({
+                title: title,
+                img: imageUrl!,
+                url: url,
+                slug: url.split('/').filter(e => e != '').pop()!,
+            })
+        })
+
+        await browser.close();
+
+        return result;
+    }
+    
+    /**
      * getTheatersNames
      */
     // TODO: rewrite this one by fetching theaters list directly from  https://www.xml-sitemaps.com/download/www.canalolympia.com-52d54e4ae/sitemap.xml?view=1
-    public theatersNames(): {name: string}[] {
-        const names: {name: string}[] = [];
+    public theatersNames(): { name: string }[] {
+
+        const names: { name: string }[] = [];
 
         for (const url of theatersUrls) {
             names.push({
@@ -35,9 +85,9 @@ export default class ScrappingService implements BaseService {
      * getMoviesInfos
      * lang can be either fr or en
      */
-    public async movies(theaterName: string, lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
+    public async theaterMovies(theaterName: string, lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
 
         try {
@@ -53,7 +103,6 @@ export default class ScrappingService implements BaseService {
             this.logger.fatal((error as Error).message);
 
             throw Error((error as Error).message);
-
         }
 
         const elements = await page.$$('ul[data-date].theater-movies');
@@ -66,7 +115,7 @@ export default class ScrappingService implements BaseService {
 
             const text = await page.evaluate(el => el.outerHTML, element);
 
-            const root = parse((text as string));
+            const root = parse(text);
 
             const rawDate = root.querySelector('ul')?.rawAttributes['data-date'] as string;
 
@@ -110,7 +159,7 @@ export default class ScrappingService implements BaseService {
      */
     public async movieInfoBySlug(slug: string, lang: string = 'fr'): Promise<TheaterMovieModel | null> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
 
         const cleanSlug = slug.replace('-en', '');
@@ -127,9 +176,7 @@ export default class ScrappingService implements BaseService {
             this.logger.fatal(error);
 
             throw Error((error as Error).message);
-
         }
-
 
         const htmlRoot = parse(await page.content());
 
@@ -140,13 +187,11 @@ export default class ScrappingService implements BaseService {
         const genre = htmlRoot.querySelector('div.movie-top-container-cover-content > p.genres > span')?.textContent.split(':').pop()?.trim();
         const date = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.date')?.textContent.split(':').pop()?.trim();
         const duration = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.time')?.textContent.split(':').pop()?.trim();
-
         const brief = htmlRoot.querySelector('div.synopse-modal > p')?.textContent;
         const trailerUrl = htmlRoot.querySelector('div.wrapper > div.movie > iframe')?.rawAttributes.src;
 
-    
         const TheaterMovie: TheaterMovieModel = {
-            title: title!,
+            title: title,
             genre: genre!,
             duration: duration!,
             releaseDate: date!,
@@ -166,7 +211,7 @@ export default class ScrappingService implements BaseService {
     */
     public async movieDiffusionInfos(slug: string, lang: string = 'fr', theaterName?: string): Promise<TheaterDiffusionInfoModel[]> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
 
         const cleanSlug = slug.replace('-en', '');
@@ -193,7 +238,7 @@ export default class ScrappingService implements BaseService {
 
         sessionsInfos?.childNodes.forEach((element) => {
 
-            const e = element as HTMLElement;   
+            const e = element as HTMLElement;
 
             if (e.localName === 'div' && (theaterName ? e.rawAttributes['data-name'] == theaterName : true)) {
 
@@ -214,7 +259,7 @@ export default class ScrappingService implements BaseService {
                         const weekNumber = li.rawAttributes['data-day'];
                         const weekDay = li.querySelector('span.week-day')?.innerText!;
                         const dataHours: string[] = [];
-                        
+
 
                         e.querySelectorAll(`ul[data-day=${weekNumber}] > li`).forEach((e) => {
                             dataHours.push(e.innerText)
@@ -245,7 +290,7 @@ export default class ScrappingService implements BaseService {
      */
     public async theaterInfos(theaterName: string, lang: string = 'fr'): Promise<TheaterInfosModel> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
 
         const cleanedTheaterName = theaterName.replace('-en', '');
@@ -290,7 +335,7 @@ export default class ScrappingService implements BaseService {
             title: string,
             link: string,
         }[] = [];
- 
+
 
         mediaLi.forEach((e) => {
             media.push({
@@ -298,7 +343,6 @@ export default class ScrappingService implements BaseService {
                 link: e.querySelector('img')?.rawAttributes.alt!
             });
         });
-
 
         const theaterInfos: TheaterInfosModel = {
             name: name!,

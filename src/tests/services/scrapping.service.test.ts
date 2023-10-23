@@ -16,9 +16,9 @@ describe('Test on Scapping Service', () => {
     });
 
 
-    test('if movies is working', async () => {
+    test('if theaterMovies is working', async () => {
 
-        return scrappingService.movies('wologuede').then((movies) => {
+        return scrappingService.theaterMovies('wologuede').then((movies) => {
 
             expect(movies.length).toBeGreaterThan(0);
         });
@@ -26,9 +26,9 @@ describe('Test on Scapping Service', () => {
     });
 
 
-    test('if movies is working for en lang', async () => {
+    test('if theaterMovies is working for en lang', async () => {
 
-        return scrappingService.movies('wologuede', 'en').then((movies) => {
+        return scrappingService.theaterMovies('wologuede', 'en').then((movies) => {
 
             testingMovieSlug = movies[0].slug;
 
@@ -141,6 +141,39 @@ describe('Test on Scapping Service', () => {
             expect(infos.locationUrl).toBeDefined();
             expect(infos.pricing.length).toBeGreaterThan(0);
             expect(infos.media.length).toBeGreaterThan(0);
+            
+        });
+
+    });
+
+    test('if availableMovies is working', async () => {
+
+        return scrappingService.availableMovies().then((movies) => {
+
+            expect(movies.length).toBeGreaterThan(0);
+
+            const movie = movies[0];
+            
+            expect(movie.title).not.toBeNull();
+            expect(movie.slug).toBeDefined();
+            expect(movie.img).toBeDefined();
+            
+        });
+
+    });
+
+
+    test('if availableMovies is working with lang en', async () => {
+
+        return scrappingService.availableMovies('en').then((movies) => {
+
+            expect(movies.length).toBeGreaterThan(0);
+
+            const movie = movies[0];   
+
+            expect(movie.title).not.toBeNull();
+            expect(movie.img).toBeDefined();
+            expect(movie.slug).toBeDefined();
             
         });
 
