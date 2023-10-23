@@ -9,6 +9,34 @@ describe('Testing movies routes', () => {
 
     let testingMovieSlug: string;
 
+    test('if /GET /movies is working', async () => {
+
+        const res = await reqApp.get('/movies');
+
+        expect(res.statusCode).toBe(200);
+        expect((res.body as []).length).toBeGreaterThan(0);
+
+    });
+
+    test('if /GET /movies is working with lang en', async () => {
+
+        const res = await reqApp.get('/movies?lang=en');
+
+        expect(res.statusCode).toBe(200);
+        expect((res.body as []).length).toBeGreaterThan(0);
+
+    });
+
+
+    test('if /GET /movies is not  working with bad lang', async () => {
+
+        const res = await reqApp.get('/movies?lang=zk');
+
+        expect(res.statusCode).not.toBe(200);
+
+    });
+
+
     test('if /GET /movies/ is working', async () => {
 
         const res = await reqApp.get('/movies/wologuede');
