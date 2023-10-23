@@ -150,7 +150,6 @@ describe('Test on Scapping Service', () => {
 
         return scrappingService.availableMovies().then((movies) => {
 
-            
             expect(movies.length).toBeGreaterThan(0);
 
             const movie = movies[0];
@@ -158,7 +157,8 @@ describe('Test on Scapping Service', () => {
             console.log(movie);
             
             expect(movie.title).not.toBeNull();
-            expect(movie.slug).not.toBeNull();
+            expect(movie.slug).toBeDefined();
+            expect(movie.img).toBeDefined();
             
         });
 
@@ -171,12 +171,11 @@ describe('Test on Scapping Service', () => {
 
             expect(movies.length).toBeGreaterThan(0);
 
-            const movie = movies[0];
-            console.log(movie);
-            
+            const movie = movies[0];   
 
             expect(movie.title).not.toBeNull();
-            expect(movie.slug).not.toBeNull();
+            expect(movie.img).toBeDefined();
+            expect(movie.slug).toBeDefined();
             
         });
 

@@ -14,12 +14,12 @@ export default class ScrappingService implements BaseService {
 
 
     /**
-     * avalaibleMovies
+     * availableMovies
      * lang can be either fr or en
      */
     public async availableMovies(lang: string = 'fr'): Promise<{
         title: string,
-        imageUrl: string | null,
+        img: string | null,
         slug: string
     }[]> {
 
@@ -43,8 +43,8 @@ export default class ScrappingService implements BaseService {
 
         const result: {
             title: string,
-            imageUrl: string,
-            slug: string
+            img: string,
+            slug: string,
         }[] = [];
 
         const htmlRoot = parse(await page.content());
@@ -52,15 +52,15 @@ export default class ScrappingService implements BaseService {
         const aMovieList = htmlRoot.querySelectorAll('section.homepage-affiche > div.wrapper > div.homepage-affiche-list > a.homepage-affiche-list-movie');
         
         aMovieList.forEach((e) => {
-            const url =  e.rawAttributes.href ?? '';
+            const url =  e.rawAttributes.href;
 
             const title = e.querySelector('article > h1')?.textContent!;
             const imageUrl =  e.querySelector('article > figure > img')?.rawAttributes.src ?? null;
 
             result.push({
                 title: title,
-                imageUrl: imageUrl!,
-                slug: url.split('/').filter((e) => e != '').pop()!,
+                img: imageUrl!,
+                slug: url,
             })
         })
 
@@ -68,6 +68,8 @@ export default class ScrappingService implements BaseService {
 
         return result;
     }
+
+    
     /**
      * getTheatersNames
      */
