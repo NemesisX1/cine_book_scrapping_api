@@ -154,8 +154,6 @@ describe('Test on Scapping Service', () => {
 
             const movie = movies[0];
             
-            console.log(movie);
-            
             expect(movie.title).not.toBeNull();
             expect(movie.slug).toBeDefined();
             expect(movie.img).toBeDefined();

@@ -17,11 +17,7 @@ export default class ScrappingService implements BaseService {
      * availableMovies
      * lang can be either fr or en
      */
-    public async availableMovies(lang: string = 'fr'): Promise<{
-        title: string,
-        img: string | null,
-        slug: string
-    }[]> {
+    public async availableMovies(lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
 
         const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
@@ -41,11 +37,7 @@ export default class ScrappingService implements BaseService {
             throw Error((error as Error).message);
         }
 
-        const result: {
-            title: string,
-            img: string,
-            slug: string,
-        }[] = [];
+        const result: TheaterMovieBriefModel[] = [];
 
         const htmlRoot = parse(await page.content());
 
@@ -60,6 +52,7 @@ export default class ScrappingService implements BaseService {
             result.push({
                 title: title,
                 img: imageUrl!,
+                url: url,
                 slug: url.split('/').filter(e => e != '').pop()!,
             })
         })

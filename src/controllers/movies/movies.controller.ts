@@ -10,9 +10,9 @@ export default class MoviesController implements BaseController {
     private scrappingService = new ScrappingService();
 
      /**
-     * getMovies
+     * getMoviesByTheater
      */
-     public async getMovies(params: {theaterName: string, lang: string}, res: Response) : Promise<Response> {
+     public async getMoviesByTheater(params: {theaterName: string, lang: string}, res: Response) : Promise<Response> {
        
         try {
             
