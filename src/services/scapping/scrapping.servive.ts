@@ -60,7 +60,7 @@ export default class ScrappingService implements BaseService {
             result.push({
                 title: title,
                 img: imageUrl!,
-                slug: url,
+                slug: url.split('/').filter(e => e != '').pop()!,
             })
         })
 
@@ -68,7 +68,6 @@ export default class ScrappingService implements BaseService {
 
         return result;
     }
-
     
     /**
      * getTheatersNames
