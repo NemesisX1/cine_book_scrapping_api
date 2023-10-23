@@ -21,7 +21,7 @@ export default class ScrappingService implements BaseService {
 
         const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
-        
+
         try {
 
             await page.goto(
@@ -42,26 +42,28 @@ export default class ScrappingService implements BaseService {
         const htmlRoot = parse(await page.content());
 
         const aMovieList = htmlRoot.querySelectorAll('section.homepage-affiche > div.wrapper > div.homepage-affiche-list > a.homepage-affiche-list-movie');
-        
+
         aMovieList.forEach((e) => {
-            const url =  e.rawAttributes.href ?? '/';
+            if (e.rawAttributes.href) {
+                const url = e.rawAttributes.href;
 
-            const title = e.querySelector('article > h1')?.textContent!;
-            const imageUrl =  e.querySelector('article > figure > img')?.rawAttributes.src ?? null;
+                const title = e.querySelector('article > h1')?.textContent!;
+                const imageUrl = e.querySelector('article > figure > img')?.rawAttributes.src ?? null;
 
-            result.push({
-                title: title,
-                img: imageUrl!,
-                url: url,
-                slug: url.split('/').filter(e => e != '').pop()!,
-            })
+                result.push({
+                    title: title,
+                    img: imageUrl!,
+                    url: url,
+                    slug: url.split('/').filter(e => e != '').pop()!,
+                })
+            }
         })
 
         await browser.close();
 
         return result;
     }
-    
+
     /**
      * getTheatersNames
      */
