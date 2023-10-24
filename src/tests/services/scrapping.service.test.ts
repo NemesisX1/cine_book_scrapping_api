@@ -12,6 +12,10 @@ describe('Test on Scapping Service', () => {
         const names = await scrappingService.theatersNames();
 
         expect(names.length).toBeGreaterThan(0);
+        
+        const name = names[0];
+        expect(name.country).toBeDefined();
+        expect(name.cities.length).toBeGreaterThan(0);
 
     });
 
@@ -21,6 +25,7 @@ describe('Test on Scapping Service', () => {
         return scrappingService.theaterMovies('wologuede').then((movies) => {
 
             expect(movies.length).toBeGreaterThan(0);
+            
         });
 
     });
