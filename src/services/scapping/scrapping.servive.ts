@@ -112,8 +112,7 @@ export default class ScrappingService implements BaseService {
                             ]
                         }]
                     });
-                }
-                else {
+                } else {
                     // country exists, check if city exists
                     const cityIndex = theaters[countryIndex].cities.findIndex((e) => e.name == city);
 
@@ -126,8 +125,7 @@ export default class ScrappingService implements BaseService {
                                 slug: slugCleaned!
                             }]
                         });
-                    }
-                    else {
+                    } else {
                         // city exists, add theater to it
                         theaters[countryIndex].cities[cityIndex].theaters.push({
                             name: theaterNameCleaned,
@@ -136,8 +134,7 @@ export default class ScrappingService implements BaseService {
                     }
                 }
             }
-        }
-        catch (error) {
+        } catch (error) {
             this.logger.fatal('theater names');
             this.logger.fatal((error as Error).message);
 
