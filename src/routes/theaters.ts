@@ -23,7 +23,7 @@ router.get(
         description: 'Ok' ,
         schema: [
           {
-            name: "wologuede"
+            $ref: '#/definitions/TheaterName'
           }
         ]
       }

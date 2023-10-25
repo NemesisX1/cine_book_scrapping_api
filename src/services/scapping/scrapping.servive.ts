@@ -254,7 +254,7 @@ export default class ScrappingService implements BaseService {
         const brief = htmlRoot.querySelector('div.synopse-modal > p')?.textContent;
         const trailerUrl = htmlRoot.querySelector('div.wrapper > div.movie > iframe')?.rawAttributes.src;
 
-      
+
         const TheaterMovie: TheaterMovieModel = {
             title: title,
             genre: genre!,

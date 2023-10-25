@@ -7,9 +7,6 @@
     "license": {
       "name": "MIT Licence",
       "url": "https://github.com/NemesisX1/canal_olympia_scrapping_api/blob/main/LICENSE.md"
-    },
-    "servers": {
-      "url": "http://51.91.76.77:3123"
     }
   },
   "tags": [
@@ -38,6 +35,218 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/movies": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "summary": "Fetch all the available movies",
+        "description": "Fetch all the available movies",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "The response language",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "fr",
+                "en"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "The creator"
+                    },
+                    "url": {
+                      "type": "string",
+                      "example": "https://example.com"
+                    },
+                    "img": {
+                      "type": "string",
+                      "example": "https://example.com"
+                    },
+                    "slug": {
+                      "type": "string",
+                      "example": "the-creator"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "The creator"
+                    },
+                    "url": {
+                      "type": "string",
+                      "example": "https://example.com"
+                    },
+                    "img": {
+                      "type": "string",
+                      "example": "https://example.com"
+                    },
+                    "slug": {
+                      "type": "string",
+                      "example": "the-creator"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Your body was bad formatted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -727,13 +936,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string",
-                        "example": "wologuede"
-                      }
-                    }
+                    "$ref": "#/components/schemas/TheaterName"
                   },
                   "xml": {
                     "name": "main"
@@ -744,13 +947,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string",
-                        "example": "wologuede"
-                      }
-                    }
+                    "$ref": "#/components/schemas/TheaterName"
                   },
                   "xml": {
                     "name": "main"
@@ -1027,6 +1224,46 @@
   },
   "components": {
     "schemas": {
+      "TheaterName": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "example": "any"
+          },
+          "cities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "theaters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "slug": {
+                        "type": "string",
+                        "example": "any"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "any"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "TheaterName"
+        }
+      },
       "TheaterMovie": {
         "type": "object",
         "properties": {
@@ -1194,5 +1431,6 @@
         }
       }
     }
-  }
+  },
+  "url": "http://51.91.76.77:3123"
 }

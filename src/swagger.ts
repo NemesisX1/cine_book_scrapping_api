@@ -19,7 +19,7 @@ const doc = {
             name: '/',             // Tag name
             description: ''       // Tag description
         },
-        
+
         {
             name: 'Theaters',             // Tag name
             description: 'Fetch theaters informations'       // Tag description
@@ -38,7 +38,20 @@ const doc = {
     securityDefinitions: {},  // by default: empty object
 
     definitions: {
-       
+        TheaterName: {
+            country: 'any',
+            cities: [
+                {
+                    name: 'any',
+                    theaters: [
+                        {
+                            slug: 'any',
+                            name: 'any',
+                        }
+                    ]
+                }
+            ]
+        },
         TheaterMovie: {
             title: 'The Creator',
             slug: 'the-creator',
