@@ -70,7 +70,7 @@ describe('Test on Scapping Service', () => {
     test('if movieInfoBySlug is not working with bad slug', async () => {
 
         return scrappingService.movieInfoBySlug('zkk').then((info) => {
-
+                        
             expect(info).toBeNull();
 
         });
@@ -139,6 +139,22 @@ describe('Test on Scapping Service', () => {
     test('if theaterInfos is working', async () => {
 
         return scrappingService.theaterInfos('wologuede').then((infos) => {
+
+            expect(infos).not.toBeNull();
+            expect(infos.name).toBeDefined();
+            expect(infos.location).toBeDefined();
+            expect(infos.locationUrl).toBeDefined();
+            expect(infos.pricing.length).toBeGreaterThan(0);
+            expect(infos.media.length).toBeGreaterThan(0);
+
+        });
+
+    });
+
+
+    test('if theaterInfos is working with lang en', async () => {
+
+        return scrappingService.theaterInfos('wologuede', 'en').then((infos) => {
 
             expect(infos).not.toBeNull();
             expect(infos.name).toBeDefined();

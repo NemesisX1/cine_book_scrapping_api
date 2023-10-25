@@ -7,7 +7,7 @@ import TheaterMovieBriefModel from "../../models/theater-movie-brief.model";
 import TheaterDiffusionInfoModel from "../../models/theater-movie-diffusion-info.model";
 import TheaterInfosModel from "../../models/theater-info.model";
 import TheaterNameModel from "@/models/theater-name.model";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import * as cheerio from 'cheerio';
 
 export default class ScrappingService implements BaseService {
@@ -21,27 +21,28 @@ export default class ScrappingService implements BaseService {
      */
     public async availableMovies(lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-        const page = await browser.newPage();
+        let response: AxiosResponse;
 
         try {
 
-            await page.goto(
-                lang == 'en'
-                    ? `${infos.baseUrl}/en`
-                    : `${infos.baseUrl}`);
+            response = await axios.get(lang == 'en' ? `${infos.baseUrl}/en` : `${infos.baseUrl}`);
 
         } catch (error) {
 
-            this.logger.fatal('availableMovies');
-            this.logger.fatal((error as Error).message);
+            const e = error as AxiosError;
 
-            throw Error((error as Error).message);
+            this.logger.fatal('availableMovies');
+            this.logger.fatal(e.message);
+
+            if (e.response?.status == 404)
+                return [];
+            else
+                throw Error(e.message);
         }
 
         const result: TheaterMovieBriefModel[] = [];
 
-        const htmlRoot = parse(await page.content());
+        const htmlRoot = parse(response.data);
 
         const aMovieList = htmlRoot.querySelectorAll('section.homepage-affiche > div.wrapper > div.homepage-affiche-list > a.homepage-affiche-list-movie');
 
@@ -61,7 +62,6 @@ export default class ScrappingService implements BaseService {
             }
         })
 
-        await browser.close();
 
         return result;
     }
@@ -72,9 +72,24 @@ export default class ScrappingService implements BaseService {
     // TODO: rewrite this one by fetching theaters list directly from  https://www.xml-sitemaps.com/download/www.canalolympia.com-52d54e4ae/sitemap.xml?view=1
     public async theatersNames(): Promise<TheaterNameModel[]> {
         const theaters: TheaterNameModel[] = [];
+        let response: AxiosResponse;
 
         try {
-            const response = await axios.get(infos.baseUrl);
+
+            response = await axios.get(infos.baseUrl);
+
+        } catch (error) {
+
+            const e = error as AxiosError;
+
+            this.logger.fatal('theatersNames');
+            this.logger.fatal(e);
+
+            throw Error(e.message);
+        }
+
+        try {
+
             const htmlRoot = cheerio.load(response.data);
 
             // Get all anchor tags inside li elements with the specified class
@@ -135,6 +150,7 @@ export default class ScrappingService implements BaseService {
                 }
             }
         } catch (error) {
+
             this.logger.fatal('theater names');
             this.logger.fatal((error as Error).message);
 
@@ -151,25 +167,30 @@ export default class ScrappingService implements BaseService {
      */
     public async theaterMovies(theaterName: string, lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-        const page = await browser.newPage();
+        let response: AxiosResponse;
 
         try {
 
-            await page.goto(
-                lang == 'en'
-                    ? `${infos.baseUrl}/en/${infos.theatersUrl}/${theaterName}-en`
-                    : `${infos.baseUrl}/${infos.theatersUrl}/${theaterName}`);
+            response = await axios.get(lang == 'en'
+                ? `${infos.baseUrl}/en/${infos.theatersUrl}/${theaterName}-en`
+                : `${infos.baseUrl}/${infos.theatersUrl}/${theaterName}`);
 
         } catch (error) {
 
-            this.logger.fatal('movies');
-            this.logger.fatal((error as Error).message);
+            const e = error as AxiosError;
 
-            throw Error((error as Error).message);
+            this.logger.fatal('movies');
+            this.logger.fatal(e.message);
+
+            if (e.response?.status == 404)
+                return [];
+            else
+                throw Error(e.message);
         }
 
-        const elements = await page.$$('ul[data-date].theater-movies');
+        const htmlRoot = parse(response.data);
+
+        const elements = htmlRoot.querySelectorAll('ul[data-date].theater-movies');
 
         const result: TheaterMovieBriefModel[] = [];
 
@@ -177,9 +198,7 @@ export default class ScrappingService implements BaseService {
         /// TODO: reduce complexity by using in a more efficient way the html parser and its querySelector
         for (const element of elements) {
 
-            const text = await page.evaluate(el => el.outerHTML, element);
-
-            const root = parse(text);
+            const root = parse(element.outerHTML);
 
             const rawDate = root.querySelector('ul')?.rawAttributes['data-date'] as string;
 
@@ -211,8 +230,6 @@ export default class ScrappingService implements BaseService {
             });
         }
 
-        await browser.close();
-
         return result;
     }
 
@@ -223,26 +240,31 @@ export default class ScrappingService implements BaseService {
      */
     public async movieInfoBySlug(slug: string, lang: string = 'fr'): Promise<TheaterMovieModel | null> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-        const page = await browser.newPage();
+        let response: AxiosResponse;
 
         const cleanSlug = slug.replace('-en', '');
 
         try {
 
-            await page.goto(lang == 'en'
+            response = await axios.get(lang == 'en'
                 ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en`
                 : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
 
         } catch (error) {
 
-            this.logger.fatal('movieInfoBySlug');
-            this.logger.fatal(error);
+            const e = error as AxiosError;
 
-            throw Error((error as Error).message);
+            this.logger.fatal('movieInfoBySlug');
+            this.logger.fatal(e.message);
+
+            if (e.response?.status == 404)
+                return null;
+            else
+                throw Error(e.message);
+
         }
 
-        const htmlRoot = parse(await page.content());
+        const htmlRoot = parse(response.data);
 
         const title = htmlRoot.querySelector('div.movie-top-container-cover-content > h1')?.textContent;
 
@@ -254,7 +276,6 @@ export default class ScrappingService implements BaseService {
         const brief = htmlRoot.querySelector('div.synopse-modal > p')?.textContent;
         const trailerUrl = htmlRoot.querySelector('div.wrapper > div.movie > iframe')?.rawAttributes.src;
 
-
         const TheaterMovie: TheaterMovieModel = {
             title: title,
             genre: genre!,
@@ -263,8 +284,6 @@ export default class ScrappingService implements BaseService {
             descriptionBrief: brief!,
             trailerLink: trailerUrl!,
         };
-
-        await browser.close();
 
         return TheaterMovie;
     }
@@ -276,26 +295,31 @@ export default class ScrappingService implements BaseService {
     */
     public async movieDiffusionInfos(slug: string, lang: string = 'fr', theaterName?: string): Promise<TheaterDiffusionInfoModel[]> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-        const page = await browser.newPage();
+        let response: AxiosResponse;
 
         const cleanSlug = slug.replace('-en', '');
 
         try {
 
-            await page.goto(lang == 'en'
+            response = await axios.get(lang == 'en'
                 ? `${infos.baseUrl}/en/${infos.moviesUrl}/${cleanSlug}-en`
                 : `${infos.baseUrl}/${infos.moviesUrl}/${cleanSlug}`);
 
+
         } catch (error) {
 
-            this.logger.fatal('movieDiffusionInfos');
-            this.logger.fatal((error as Error).message);
+            const e = error as AxiosError;
 
-            throw Error((error as Error).message);
+            this.logger.fatal('movieDiffusionInfos');
+            this.logger.fatal(e.message);
+
+            if (e.response?.status == 404)
+                return [];
+            else
+                throw Error(e.message);
         }
 
-        const htmlRoot = parse(await page.content());
+        const htmlRoot = parse(response.data);
 
         const sessionsInfos = htmlRoot.querySelector('div.sessions');
 
@@ -341,9 +365,7 @@ export default class ScrappingService implements BaseService {
                     dates: dates,
                 })
             }
-        })
-
-        await browser.close();
+        });
 
         return diffusionInfos;
     }
@@ -355,28 +377,30 @@ export default class ScrappingService implements BaseService {
      */
     public async theaterInfos(theaterName: string, lang: string = 'fr'): Promise<TheaterInfosModel> {
 
-        const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-        const page = await browser.newPage();
+        let response: AxiosResponse;
 
         const cleanedTheaterName = theaterName.replace('-en', '');
 
         try {
 
-            await page.goto(lang == 'en'
+            response = await axios.get(lang == 'en'
                 ? `${infos.baseUrl}/en/${infos.theatersUrl}/${cleanedTheaterName}-en`
-                : `${infos.baseUrl}/${infos.theatersUrl}/${cleanedTheaterName}`);
+                : `${infos.baseUrl}/${infos.theatersUrl}/${cleanedTheaterName}`)
+
 
         } catch (error) {
+
+            const e = error as AxiosError;
 
             this.logger.fatal('theaterInfos');
             this.logger.fatal(error);
 
-            throw Error((error as Error).message);
+            throw Error(e.message);
 
         }
 
 
-        const htmlRoot = parse(await page.content());
+        const htmlRoot = parse(response.data);
 
         const name = htmlRoot.querySelector('div.theater-top-container-cover-content > h1')?.textContent;
         const location = htmlRoot.querySelector('div.theater-top-container-cover-content > a')?.textContent;
@@ -417,8 +441,6 @@ export default class ScrappingService implements BaseService {
             pricing: pricing,
             media: media,
         };
-
-        await browser.close();
 
         return theaterInfos;
     }

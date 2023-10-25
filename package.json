@@ -10,7 +10,7 @@
     "build": "sh etc/build.sh",
     "prod": "npm build && cd dist && npm i && node bin/www.js",
     "docs": "ts-node src/swagger.ts",
-    "test": "jest --runInBand --detectOpenHandles --forceExit"
+    "test": "jest --runInBand --detectOpenHandles --forceExit --verbose"
   },
   "dependencies": {
     "@sentry/node": "^7.74.1",

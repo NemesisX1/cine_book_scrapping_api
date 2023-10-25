@@ -15,9 +15,8 @@ npx ts-express
 
 And the code architecture is mainly inspired by the default [Nest.js](https://nestjs.com/) one.
 
-The core scrapper is made up of these two packages:
+The core scrapper is made up of these packages:
 
-- [Puppeteer](https://pptr.dev/) who act as the main scrapper
 - [node-html-parser](https://www.npmjs.com/package/node-html-parser) who helps to parse the html document (thinking about removing this one later, I really guess that i can fully rely on Puppeteer)
 
 > ### 🚀 Deployment
@@ -40,9 +39,6 @@ The core scrapper is made up of these two packages:
   sudo docker compose up -d
   ```
 
-
-
 Then go to `localhost:3213` or (localhost:PORT with PORT defined in the .env file)
-
 
 **Elikem Medehou** [![Twitter Follow](https://img.shields.io/twitter/follow/juniormedehou_?label=Follow&style=social)](https://twitter.com/juniormedehou_)
