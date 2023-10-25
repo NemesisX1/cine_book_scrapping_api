@@ -103,9 +103,9 @@ export default class ScrappingService implements BaseService {
 
                 // get country, city and theater name
                 const parts = text.split(' – ');
-                const [countryAndCity, theaterName] = parts;
+                const [countryAndCity, theaterSlug] = parts;
                 const [country, city] = countryAndCity.split(', ');
-                const theaterNameCleaned = theaterName.replace('CanalOlympia ', '');
+                const theaterSlugCleaned = theaterSlug.replace('CanalOlympia ', '');
 
                 // get the slug from the href attribute
                 const slug = htmlRoot(element).attr('href')?.split('/').filter((e) => e != '').pop();
@@ -121,7 +121,7 @@ export default class ScrappingService implements BaseService {
                             name: city,
                             'theaters': [
                                 {
-                                    name: theaterNameCleaned,
+                                    name: theaterSlugCleaned,
                                     slug: slugCleaned!
                                 }
                             ]
@@ -136,14 +136,14 @@ export default class ScrappingService implements BaseService {
                         theaters[countryIndex].cities.push({
                             name: city,
                             theaters: [{
-                                name: theaterNameCleaned,
+                                name: theaterSlugCleaned,
                                 slug: slugCleaned!
                             }]
                         });
                     } else {
                         // city exists, add theater to it
                         theaters[countryIndex].cities[cityIndex].theaters.push({
-                            name: theaterNameCleaned,
+                            name: theaterSlugCleaned,
                             slug: slugCleaned!
                         });
                     }
@@ -165,15 +165,15 @@ export default class ScrappingService implements BaseService {
      * getMoviesInfos
      * lang can be either fr or en
      */
-    public async theaterMovies(theaterName: string, lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
+    public async theaterMovies(theaterSlug: string, lang: string = 'fr'): Promise<TheaterMovieBriefModel[]> {
 
         let response: AxiosResponse;
 
         try {
 
             response = await axios.get(lang == 'en'
-                ? `${infos.baseUrl}/en/${infos.theatersUrl}/${theaterName}-en`
-                : `${infos.baseUrl}/${infos.theatersUrl}/${theaterName}`);
+                ? `${infos.baseUrl}/en/${infos.theatersUrl}/${theaterSlug}-en`
+                : `${infos.baseUrl}/${infos.theatersUrl}/${theaterSlug}`);
 
         } catch (error) {
 
@@ -293,7 +293,7 @@ export default class ScrappingService implements BaseService {
      * getMovieDiffusionInfos
      * lang can be either fr or en
     */
-    public async movieDiffusionInfos(slug: string, lang: string = 'fr', theaterName?: string): Promise<TheaterDiffusionInfoModel[]> {
+    public async movieDiffusionInfos(slug: string, lang: string = 'fr', theaterSlug?: string): Promise<TheaterDiffusionInfoModel[]> {
 
         let response: AxiosResponse;
 
@@ -329,9 +329,9 @@ export default class ScrappingService implements BaseService {
 
             const e = element as HTMLElement;
 
-            if (e.localName === 'div' && (theaterName ? e.rawAttributes['data-name'] == theaterName : true)) {
+            if (e.localName === 'div' && (theaterSlug ? e.rawAttributes['data-name'] == theaterSlug : true)) {
 
-                const theaterName = e.rawAttributes['data-name'];
+                const theaterSlug = e.rawAttributes['data-name'];
                 //  const 
                 const liList = e.querySelectorAll('li');
 
@@ -361,7 +361,7 @@ export default class ScrappingService implements BaseService {
                 })
 
                 diffusionInfos.push({
-                    theater: theaterName,
+                    theater: theaterSlug,
                     dates: dates,
                 })
             }
@@ -375,11 +375,11 @@ export default class ScrappingService implements BaseService {
      * theaterInfos
      * lang can be either fr or en
      */
-    public async theaterInfos(theaterName: string, lang: string = 'fr'): Promise<TheaterInfosModel> {
+    public async theaterInfos(theaterSlug: string, lang: string = 'fr'): Promise<TheaterInfosModel> {
 
         let response: AxiosResponse;
 
-        const cleanedTheaterName = theaterName.replace('-en', '');
+        const cleanedTheaterName = theaterSlug.replace('-en', '');
 
         try {
 

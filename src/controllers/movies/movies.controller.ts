@@ -38,15 +38,15 @@ export default class MoviesController implements BaseController {
     /**
     * getMoviesByTheater
     */
-    public async getMoviesByTheater(params: { theaterName: string, lang: string }, res: Response): Promise<Response> {
+    public async getMoviesByTheater(params: { theaterSlug: string, lang: string }, res: Response): Promise<Response> {
 
         try {
 
-            const movies = await this.scrappingService.theaterMovies(params.theaterName, params.lang);
+            const movies = await this.scrappingService.theaterMovies(params.theaterSlug, params.lang);
 
             if (movies.length == 0) {
                 return res.status(StatusCodes.NOT_FOUND).json({
-                    message: `${params.theaterName} was not found`,
+                    message: `${params.theaterSlug} was not found`,
                     errors: []
                 });
             }

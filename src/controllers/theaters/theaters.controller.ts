@@ -37,15 +37,15 @@ export default class TheatersController implements BaseController {
     /**
    * getTheaterInfos
    */
-    public async getTheaterInfos(params: { theaterName: string, lang: string }, res: Response): Promise<Response> {
+    public async getTheaterInfos(params: { theaterSlug: string, lang: string }, res: Response): Promise<Response> {
 
         try {
 
-            const theaterInfos = await this.scrappingService.theaterInfos(params.theaterName, params.lang);
+            const theaterInfos = await this.scrappingService.theaterInfos(params.theaterSlug, params.lang);
 
             if (!theaterInfos.name) {
                 return res.status(StatusCodes.NOT_FOUND).json({
-                    message: `${params.theaterName} was not found`,
+                    message: `${params.theaterSlug} was not found`,
                     errors: []
                 });
             }

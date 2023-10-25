@@ -49,9 +49,9 @@ router.get(
 
 
 router.get(
-  '/infos/:theater',
+  '/infos/:theaterSlug',
 
-  param('theater').isString(),
+  param('theaterSlug').isString(),
   query('lang').default('fr').isIn(['fr', 'en']),
 
   ExpressValidatorMiddleware,
@@ -116,7 +116,7 @@ router.get(
   */
 
     const params = {
-      theaterName: req.params.theater,
+      theaterSlug: req.params.theaterSlug,
       lang: req.query.lang as string,
     };
 

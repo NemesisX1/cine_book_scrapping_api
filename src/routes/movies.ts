@@ -78,7 +78,7 @@ router.get(
 router.get(
     '/:theater',
 
-    param('theater').isString(),
+    param('theaterSlug').isString(),
     query('lang').default('fr').isIn(['fr', 'en']),
 
     ExpressValidatorMiddleware,
@@ -142,7 +142,7 @@ router.get(
         */
 
         const params = {
-            theaterName: req.params.theater,
+            theaterSlug: req.params.theaterSlug,
             lang: req.query.lang as string,
         };
 
@@ -234,7 +234,7 @@ router.get(
     '/diffusion-infos/:slug',
 
     param('slug').isString(),
-    query('theater').optional(),
+    query('theaterSlug').optional(),
     query('lang').default('fr').isIn(['fr', 'en']),
 
     ExpressValidatorMiddleware,
@@ -297,7 +297,7 @@ router.get(
       */
 
         const params = {
-            theater: req.query.theater as string,
+            theater: req.query.theaterSlug as string,
             slug: req.params.slug,
             lang: req.query.lang as string,
         };
