@@ -76,7 +76,7 @@ router.get(
 
 
 router.get(
-    '/:theater',
+    '/:theaterSlug',
 
     param('theaterSlug').isString(),
     query('lang').default('fr').isIn(['fr', 'en']),

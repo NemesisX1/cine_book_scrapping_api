@@ -34,7 +34,7 @@ describe('Testing theaters routes', () => {
     });
 
 
-    test('if /GET theaters/infos/ with bad theater name is not working', async () => {
+    test('if /GET theaters/infos/ with bad theater slug is not working', async () => {
 
         const res = await reqApp.get('/theaters/infos/123');
         

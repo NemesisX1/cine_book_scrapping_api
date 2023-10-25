@@ -101,7 +101,7 @@ export default class ScrappingService implements BaseService {
                 // if the text is empty or does not contain 'CanalOlympia' then skip
                 if (!text || !text.includes('CanalOlympia')) continue;
 
-                // get country, city and theater name
+                // get country, city and theater slug
                 const parts = text.split(' – ');
                 const [countryAndCity, theaterSlug] = parts;
                 const [country, city] = countryAndCity.split(', ');
@@ -151,7 +151,7 @@ export default class ScrappingService implements BaseService {
             }
         } catch (error) {
 
-            this.logger.fatal('theater names');
+            this.logger.fatal('theater slugs');
             this.logger.fatal((error as Error).message);
 
             throw Error((error as Error).message);

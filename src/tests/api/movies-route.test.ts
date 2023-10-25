@@ -57,7 +57,7 @@ describe('Testing movies routes', () => {
     });
 
 
-    test('if /GET /movies/ with bad theater name is not working', async () => {
+    test('if /GET /movies/ with bad theater slug is not working', async () => {
 
         const res = await reqApp.get('/movies/123');
         
@@ -84,7 +84,7 @@ describe('Testing movies routes', () => {
     });
 
 
-    test('if /GET movies/infos/ is working with lang en', async () => {
+    test('if /GET /movies/infos/ is working with lang en', async () => {
 
         const res = await reqApp.get(`/movies/infos/${testingMovieSlug}?lang=en`);
 
@@ -102,9 +102,9 @@ describe('Testing movies routes', () => {
     });
 
 
-     test('if /GET /movies/diffusion-infos/ is working with theater name', async () => {
+     test('if /GET /movies/diffusion-infos/ is working with theater slug', async () => {
 
-        const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?theater=wologuede`);
+        const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?theaterSlug=wologuede`);
 
       expect(res.statusCode).toBe(200);
 
@@ -112,16 +112,16 @@ describe('Testing movies routes', () => {
 
 
 
-    test('if /GET /movies/diffusion-infos/ is not working with bad theater name', async () => {
+    test('if /GET /movies/diffusion-infos/ is not working with bad theater slug', async () => {
 
-        const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?theater=zki`);
+        const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?theaterSlug=zki`);
 
         expect(res.statusCode).not.toBe(200);
 
     });
 
 
-    test('if /GET movies/diffusion-infos/ is working with lang en', async () => {
+    test('if /GET /movies/diffusion-infos/ is working with lang en', async () => {
 
         const res = await reqApp.get(`/movies/diffusion-infos/${testingMovieSlug}?lang=en`);
 
