@@ -28,7 +28,8 @@ class App {
 
     this.app.use(statusMonitor(
       {
-        title: 'Canal Olympia API Status',
+        title: 'Canal Olympia API Monitor',
+        path: '/monitor',
         chartVisibility: {
           cpu: false,
           mem: false,

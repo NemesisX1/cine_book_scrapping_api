@@ -17,7 +17,21 @@ router.get('/', function (_req, res, _next) {
 
   */
   
-  res.render('index', { title: 'Welcome to the unofficial Canal Olympia API' });
+    return res.render('index', { title: 'Welcome to the unofficial Canal Olympia API' });
 });
+
+
+router.get('/status', function (_req, res, _next) {
+
+   /* 
+     #swagger.tags = ['/']
+
+     #swagger.summary = 'Redirect to the health status page'
+
+   */
+
+    return res.redirect('https://canalolympiascrappingapi.betteruptime.com')
+})
+
 
 export default router;
