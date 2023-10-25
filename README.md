@@ -17,7 +17,7 @@ And the code architecture is mainly inspired by the default [Nest.js](https://ne
 
 The core scrapper is made up of these packages:
 
-- [node-html-parser](https://www.npmjs.com/package/node-html-parser) who helps to parse the html document (thinking about removing this one later, I really guess that i can fully rely on Puppeteer)
+- [node-html-parser](https://www.npmjs.com/package/node-html-parser) who helps to parse the html document (thinking about moving to [Cheerio](https://www.npmjs.com/package/cheerio)),
 
 > ### 🚀 Deployment
 
