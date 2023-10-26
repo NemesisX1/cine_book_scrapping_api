@@ -42,26 +42,23 @@ export default class ScrappingService implements BaseService {
 
         const result: TheaterMovieBriefModel[] = [];
 
-        const htmlRoot = parse(response.data);
+        const htmlRoot = cheerio.load(response.data);
 
-        const aMovieList = htmlRoot.querySelectorAll('section.homepage-affiche > div.wrapper > div.homepage-affiche-list > a.homepage-affiche-list-movie');
+        const moviesList = htmlRoot('section.homepage-affiche > div.wrapper > div.homepage-affiche-list > a.homepage-affiche-list-movie');
 
-        aMovieList.forEach((e) => {
-            if (e.rawAttributes.href) {
-                const url = e.rawAttributes.href;
+        for (const movie of moviesList) {
+            const m = htmlRoot(movie);
+            const url = m.attr('href');
+            const title = m.find('article > h1').text();
+            const imageUrl = m.find('article > figure > img').attr('src');
 
-                const title = e.querySelector('article > h1')?.textContent!;
-                const imageUrl = e.querySelector('article > figure > img')?.rawAttributes.src ?? null;
-
-                result.push({
-                    title: title,
-                    img: imageUrl!,
-                    url: url,
-                    slug: url.split('/').filter(e => e != '').pop()!,
-                })
-            }
-        })
-
+            result.push({
+                title: title,
+                img: imageUrl || null,
+                url: url || null,
+                slug: url?.split('/').filter(e => e !== '').pop() || '',
+            });
+        }
 
         return result;
     }
@@ -188,45 +185,35 @@ export default class ScrappingService implements BaseService {
                 throw Error(e.message);
         }
 
-        const htmlRoot = parse(response.data);
+        const htmlRoot = cheerio.load(response.data);
 
-        const elements = htmlRoot.querySelectorAll('ul[data-date].theater-movies');
+        const elements = htmlRoot('ul[data-date].theater-movies');
 
         const result: TheaterMovieBriefModel[] = [];
 
-
-        /// TODO: reduce complexity by using in a more efficient way the html parser and its querySelector
         for (const element of elements) {
+            const e = htmlRoot(element);
+            const rawDate = e.attr('data-date');
 
-            const root = parse(element.outerHTML);
+            e.find('li').each((i, e) => {
 
-            const rawDate = root.querySelector('ul')?.rawAttributes['data-date'] as string;
+                const movie = htmlRoot(e);
 
-            root.childNodes.forEach((node) => {
+                const title = movie.find('a > h2').text();
+                const hour = movie.find('a > span').text().split(' ')[0];
+                const language = movie.find('a > span > div > span').text();
+                const url = movie.find('a').attr('href');
+                const img = movie.find('a > figure > img').attr('src');
 
-                node.childNodes.forEach((element) => {
-                    const e = element as HTMLElement;
-
-                    if (e.classNames != 'is-empty') {
-
-                        const eventImg = e.querySelector('a > figure > img')?.rawAttributes.src ?? null;
-                        const eventTitle = e.querySelector('a > h2')!.innerText;
-                        const eventHour = e.querySelector('a > span')!.innerText.split(' ')[0];
-                        const eventLanguage = e.querySelector('a > span > div > span')!.innerText;
-                        const eventUrl = e.querySelector('a')?.rawAttributes.href ?? null;
-
-                        result.push({
-                            date: rawDate,
-                            img: eventImg,
-                            title: eventTitle,
-                            hour: eventHour,
-                            language: eventLanguage,
-                            url: eventUrl,
-                            slug: eventUrl?.split('/').filter((e) => e != '').pop()! ?? null,
-                        })
-                    }
-
-                })
+                result.push({
+                    date: rawDate,
+                    img: img || null,
+                    title: title,
+                    hour: hour,
+                    language: language,
+                    url: url || null,
+                    slug: url?.split('/').filter((e) => e != '').pop() || '',
+                });
             });
         }
 
@@ -264,17 +251,16 @@ export default class ScrappingService implements BaseService {
 
         }
 
-        const htmlRoot = parse(response.data);
-
-        const title = htmlRoot.querySelector('div.movie-top-container-cover-content > h1')?.textContent;
+        const htmlRoot = cheerio.load(response.data);
+        const title = htmlRoot('div.movie-top-container-cover-content > h1').text();
 
         if (!title) return null;
 
-        const genre = htmlRoot.querySelector('div.movie-top-container-cover-content > p.genres > span')?.textContent.split(':').pop()?.trim();
-        const date = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.date')?.textContent.split(':').pop()?.trim();
-        const duration = htmlRoot.querySelector('div.movie-top-container-cover-content > p > span.time')?.textContent.split(':').pop()?.trim();
-        const brief = htmlRoot.querySelector('div.synopse-modal > p')?.textContent;
-        const trailerUrl = htmlRoot.querySelector('div.wrapper > div.movie > iframe')?.rawAttributes.src;
+        const genre = htmlRoot('div.movie-top-container-cover-content > p.genres > span').text().split(':').pop()?.trim();
+        const date = htmlRoot('div.movie-top-container-cover-content > p > span.date').text().split(':').pop()?.trim();
+        const duration = htmlRoot('div.movie-top-container-cover-content > p > span.time').text().split(':').pop()?.trim();
+        const brief = htmlRoot('div.synopse-modal > p').text();
+        const trailerUrl = htmlRoot('div.wrapper > div.movie > iframe').attr('src');
 
         const TheaterMovie: TheaterMovieModel = {
             title: title,
@@ -387,7 +373,6 @@ export default class ScrappingService implements BaseService {
                 ? `${infos.baseUrl}/en/${infos.theatersUrl}/${cleanedTheaterName}-en`
                 : `${infos.baseUrl}/${infos.theatersUrl}/${cleanedTheaterName}`)
 
-
         } catch (error) {
 
             const e = error as AxiosError;
@@ -396,42 +381,43 @@ export default class ScrappingService implements BaseService {
             this.logger.fatal(error);
 
             throw Error(e.message);
-
         }
 
+        const htmlRoot = cheerio.load(response.data);
 
-        const htmlRoot = parse(response.data);
+        const name = htmlRoot('div.theater-top-container-cover-content > h1').text();
+        const location = htmlRoot('div.theater-top-container-cover-content > a').text();
+        const locationUrl = htmlRoot('div.theater-top-container-cover-content > a').attr('href');
 
-        const name = htmlRoot.querySelector('div.theater-top-container-cover-content > h1')?.textContent;
-        const location = htmlRoot.querySelector('div.theater-top-container-cover-content > a')?.textContent;
-        const locationUrl = htmlRoot.querySelector('div.theater-top-container-cover-content > a')?.rawAttributes.href;
-
-        const pricingLi = htmlRoot.querySelectorAll('section.slider-and-pricing > div.wrapper > div.pricing > ul.prices-table > li');
         const pricing: {
             people: string,
             price: string,
         }[] = [];
 
-        pricingLi.forEach((e) => {
-            pricing.push({
-                people: e.querySelector('span.price-name')?.textContent?.replaceAll('*', '')!,
-                price: e.querySelector('span.price-value')?.textContent!
-            });
-        });
+        const pricingList = htmlRoot('section.slider-and-pricing > div.wrapper > div.pricing > ul.prices-table > li');
 
-        const mediaLi = htmlRoot.querySelectorAll('div.theater-top-container-cover-content > div.info-section-rs > a');
+        for (const element of pricingList) {
+            const e = htmlRoot(element);
+            pricing.push({
+                people: e.find('span.price-name').text().replaceAll('*', ''),
+                price: e.find('span.price-value').text(),
+            });
+        }
+
         const media: {
             title: string,
             link: string,
         }[] = [];
 
+        const mediaList = htmlRoot('div.theater-top-container-cover-content > div.info-section-rs > a');
 
-        mediaLi.forEach((e) => {
+        for (const element of mediaList) {
+            const e = htmlRoot(element);
             media.push({
-                title: e.rawAttributes.href,
-                link: e.querySelector('img')?.rawAttributes.alt!
+                title: e.attr('href')!,
+                link: e.find('img').attr('alt')!,
             });
-        });
+        }
 
         const theaterInfos: TheaterInfosModel = {
             name: name!,
@@ -444,7 +430,6 @@ export default class ScrappingService implements BaseService {
 
         return theaterInfos;
     }
-
 
 }
 
