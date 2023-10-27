@@ -15,9 +15,9 @@ npx ts-express
 
 And the code architecture is mainly inspired by the default [Nest.js](https://nestjs.com/) one.
 
-The core scrapper is made up of these packages:
+The core scrapper is made up of this package:
 
-- [node-html-parser](https://www.npmjs.com/package/node-html-parser) who helps to parse the html document (thinking about moving to [Cheerio](https://www.npmjs.com/package/cheerio)),
+- [Cheerio](https://www.npmjs.com/package/cheerio) who helps us parsing the html document.
 
 > ### 🚀 Deployment
 
