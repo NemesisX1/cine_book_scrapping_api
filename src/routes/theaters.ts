@@ -47,6 +47,18 @@ router.get(
   }
 );
 
+router.get('/escape-game',
+
+    ExpressValidatorMiddleware,
+
+    async function (req, res, _next) {
+        const response = theatersController.getAllEscapeGame(res);
+        return response;
+    }
+
+);
+
+
 
 router.get(
   '/infos/:theaterSlug',

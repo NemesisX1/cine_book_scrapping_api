@@ -9,6 +9,7 @@ import TheaterInfosModel from "../../models/theater-info.model";
 import TheaterNameModel from "@/models/theater-name.model";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import * as cheerio from 'cheerio';
+import TheaterEscapeGameModel from "@/models/theater-escape-game.model";
 
 export default class ScrappingService implements BaseService {
 
@@ -429,6 +430,74 @@ export default class ScrappingService implements BaseService {
         };
 
         return theaterInfos;
+    }
+
+    public async escapeGameByTheaters() {
+        let response: AxiosResponse;
+        try {
+            response = await axios.get(infos.baseUrl);
+        } catch (error) {
+
+            const e = error as AxiosError;
+
+            this.logger.fatal('theatersNames');
+            this.logger.fatal(e);
+
+            throw Error(e.message);
+        }
+
+        try {
+
+            // my logic 
+
+        } catch (error) {
+
+            this.logger.fatal('theater slugs');
+            this.logger.fatal((error as Error).message);
+
+            throw Error((error as Error).message);
+        }
+    }
+
+    public async AllEscapeGame(): Promise<TheaterEscapeGameModel> {
+        let response: AxiosResponse;
+        try {
+            response = await axios.get(`${infos.baseUrl}/escape-game/`);
+        } catch (error) {
+
+            const e = error as AxiosError;
+
+            this.logger.fatal('theatersNames');
+            this.logger.fatal(e);
+
+            throw Error(e.message);
+        }
+
+        const htmlRoot = cheerio.load(response.data);
+        const elements = htmlRoot("article");
+        let avalaibleTheatherName: String[] = [] ;
+         htmlRoot("ul.theaters li").each((index ,element) => {
+            avalaibleTheatherName.push( htmlRoot(element).data("set") as String );
+        });
+
+        avalaibleTheatherName.forEach((name) => {
+          const escapeElement =  htmlRoot(`article[data-${name}]`) ; 
+         console.log(escapeElement?.length);
+        })
+        const theaterEscapeGame: TheaterEscapeGameModel = {
+            name: "",
+            img: "",
+            price: 0,
+            groupSizeMin: 0,
+            groupSizeMax: 0,
+            difficulty: 0,
+            description: "",
+            minAge: 0,
+        }
+
+
+        return theaterEscapeGame;
+
     }
 
 }

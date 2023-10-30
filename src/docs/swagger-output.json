@@ -39,6 +39,20 @@
         }
       }
     },
+    "/status": {
+      "get": {
+        "tags": [
+          "/"
+        ],
+        "summary": "Redirect to the health status page",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/movies": {
       "get": {
         "tags": [
@@ -251,7 +265,7 @@
         }
       }
     },
-    "/movies/{theater}": {
+    "/movies/{theaterSlug}": {
       "get": {
         "tags": [
           "Movies"
@@ -260,7 +274,7 @@
         "description": "Fetch all the available movies at a given theater",
         "parameters": [
           {
-            "name": "theater",
+            "name": "theaterSlug",
             "in": "path",
             "required": true,
             "schema": {
@@ -710,7 +724,7 @@
             }
           },
           {
-            "name": "theater",
+            "name": "theaterSlug",
             "in": "query",
             "schema": {
               "type": "string"
@@ -1000,7 +1014,86 @@
         }
       }
     },
-    "/theaters/infos/{theater}": {
+    "/theaters/escape-game": {
+      "get": {
+        "tags": [
+          "Theaters"
+        ],
+        "summary": "Fetch all the available theaters name",
+        "description": "Return an array of strings with the theaters name",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TheaterName"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TheaterName"
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/theaters/infos/{theaterSlug}": {
       "get": {
         "tags": [
           "Theaters"
@@ -1009,7 +1102,7 @@
         "description": "Fetch informations about a specified theater giving his name",
         "parameters": [
           {
-            "name": "theater",
+            "name": "theaterSlug",
             "in": "path",
             "required": true,
             "schema": {
@@ -1431,6 +1524,5 @@
         }
       }
     }
-  },
-  "url": "http://51.91.76.77:3123"
+  }
 }
