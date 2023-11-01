@@ -65,10 +65,10 @@ export default class TheatersController implements BaseController {
             })
         }
     }
-    
-    public  async getAllEscapeGame(res: Response): Promise<Response> {
+
+    public  async getAllEscapeGames(res: Response): Promise<Response> {
         try {
-            const data = await this.scrappingService.AllEscapeGame();
+            const data = await this.scrappingService.AllEscapeGames();
             return res.status(StatusCodes.OK).json(data);
             
         }catch(error) {

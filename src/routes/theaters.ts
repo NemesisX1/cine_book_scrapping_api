@@ -52,7 +52,7 @@ router.get('/escape-game',
     ExpressValidatorMiddleware,
 
     async function (req, res, _next) {
-        const response = theatersController.getAllEscapeGame(res);
+        const response = theatersController.getAllEscapeGames(res);
         return response;
     }
 

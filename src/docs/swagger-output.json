@@ -1016,6 +1016,237 @@
     },
     "/theaters/escape-game": {
       "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/theaters/infos/{theaterSlug}": {
+      "get": {
+        "tags": [
+          "Theaters"
+        ],
+        "summary": "Fetch informations about a specified theater giving his name",
+        "description": "Fetch informations about a specified theater giving his name",
+        "parameters": [
+          {
+            "name": "theaterSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "The response language",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "fr",
+                "en"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterInfos"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheaterInfos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "any"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Theater not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Theater not found"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Your body was bad formatted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Your body was bad formatted"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "field"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "zk"
+                          },
+                          "msg": {
+                            "type": "string",
+                            "example": "Invalid value"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "lang"
+                          },
+                          "location": {
+                            "type": "string",
+                            "example": "query"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/escape/names": {
+      "get": {
         "tags": [
           "Theaters"
         ],
@@ -1093,7 +1324,17 @@
         }
       }
     },
-    "/theaters/infos/{theaterSlug}": {
+    "/escape/escape-game": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/escape/infos/{theaterSlug}": {
       "get": {
         "tags": [
           "Theaters"

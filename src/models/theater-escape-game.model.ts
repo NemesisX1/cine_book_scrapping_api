@@ -1,4 +1,5 @@
 export default interface TheaterEscapeGameModel {
+    theaterName : string , 
     name: string,
     img: string,
     price: number,
