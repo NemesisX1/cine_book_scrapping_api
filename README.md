@@ -1,6 +1,6 @@
-# [Non-Official] Canal Olympia Web API (scrapper) [![Running tests workflow](https://github.com/NemesisX1/canal_olympia_scrapping_api/actions/workflows/main.yml/badge.svg)](https://github.com/NemesisX1/canal_olympia_scrapping_api/actions/workflows/main.yml) [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/vyrp.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+# [Non-Official] Cine Book Web API (scrapper) [![Running tests workflow](https://github.com/NemesisX1/canal_olympia_scrapping_api/actions/workflows/main.yml/badge.svg)](https://github.com/NemesisX1/canal_olympia_scrapping_api/actions/workflows/main.yml) [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/vyrp.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 
-This is a non-official scrapper to get movies and theaters data directly from the Canal Olympia's website.
+This is a non-official scrapper to get movies and theaters data directly from a famous theater's website.
 
 **If you want to contribute check [this file](https://github.com/NemesisX1/canal_olympia_scrapping_api/blob/main/CONTRIBUTING.md).**
 
