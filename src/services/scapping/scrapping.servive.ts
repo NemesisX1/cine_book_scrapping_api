@@ -451,7 +451,7 @@ export default class ScrappingService implements BaseService {
       
     }
 
-    public async AllEscapeGames(): Promise<TheaterEscapeGameModel[]> {
+    public async AvailableEscapeGameTheaters(): Promise<TheaterEscapeGameModel[]> {
         let response: AxiosResponse;
         try {
             response = await axios.get(`${infos.baseUrl}/escape-game/`);
