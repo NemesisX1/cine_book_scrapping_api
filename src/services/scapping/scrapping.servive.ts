@@ -446,12 +446,12 @@ export default class ScrappingService implements BaseService {
             throw Error(e.message);
         }
 
-            // escape game by theaters 
+        // escape game by theaters 
 
-      
+
     }
 
-    public async AvailableEscapeGameTheaters(): Promise<TheaterEscapeGameModel[]> {
+    public async AvailableTheatersEscapeGame(): Promise<TheaterEscapeGameModel[]> {
         let response: AxiosResponse;
         try {
             response = await axios.get(`${infos.baseUrl}/escape-game/`);
@@ -473,9 +473,9 @@ export default class ScrappingService implements BaseService {
 
             htmlRoot(`article[data-${theaterName}]`).each((index, element) => {
                 const name = htmlRoot(element).children("h1").text();
-                
+
                 const e = htmlRoot(element).children();
-              
+
                 const description = e.find(".info-bloc p").text();
                 const difficulty = e.find("li.full").length;
                 const groupSizeMin = parseInt(e.find(".price").text().match(/Groupe de (\d+)/)?.[1] || "0");
