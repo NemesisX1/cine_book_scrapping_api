@@ -66,7 +66,7 @@ export default class TheatersController implements BaseController {
         }
     }
 
-    public  async getAllEscapeGames(res: Response): Promise<Response> {
+    public  async getAvailableEscapeGameTheaters(res: Response): Promise<Response> {
         try {
             const data = await this.scrappingService.AllEscapeGames();
             return res.status(StatusCodes.OK).json(data);

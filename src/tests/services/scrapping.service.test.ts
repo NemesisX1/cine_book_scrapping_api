@@ -199,4 +199,9 @@ describe('Test on Scapping Service', () => {
         });
 
     });
+
+    //excape game test 
+    test("if availableMovie with escape game is wroking ", ()=> {
+        const escapegame = scrappingService.AllEscapeGames
+    })
 })
