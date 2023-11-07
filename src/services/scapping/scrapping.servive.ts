@@ -434,11 +434,11 @@ export default class ScrappingService implements BaseService {
 
     public async escapeGameByTheaters() {
         let response: AxiosResponse;
-      
+
         try {
-      
+
             response = await axios.get(infos.baseUrl);
-      
+
         } catch (error) {
 
             const e = error as AxiosError;
@@ -455,13 +455,15 @@ export default class ScrappingService implements BaseService {
     }
 
     public async availableTheatersEscapeGame(lang: string = 'fr'): Promise<TheaterEscapeGameModel[]> {
-       
+
         let response: AxiosResponse;
-       
+
         try {
-        
-            response = await axios.get(`${infos.baseUrl}/escape-game/`);
-        
+
+            response = await axios.get(lang == 'en'
+                ? `${infos.baseUrl}/en/escape-game-en`
+                : `${infos.baseUrl}/escape-game`)
+
         } catch (error) {
 
             const e = error as AxiosError;

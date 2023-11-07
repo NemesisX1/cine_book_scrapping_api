@@ -10,11 +10,11 @@ export default class EscapeGamesController implements BaseController {
     private scrappingService = new ScrappingService();
 
 
-    public async getAvailableTheatersEscapeGame(res: Response): Promise<Response> {
+    public async getAvailableTheatersEscapeGame(lang: string, res: Response): Promise<Response> {
        
         try {
        
-            const data = await this.scrappingService.availableTheatersEscapeGame();
+            const data = await this.scrappingService.availableTheatersEscapeGame(lang);
           
             if (data.length == 0) {
                 return res.status(StatusCodes.NOT_FOUND).json({

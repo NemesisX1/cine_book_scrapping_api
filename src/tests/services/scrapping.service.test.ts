@@ -201,11 +201,12 @@ describe('Test on Scapping Service', () => {
     });
 
 
-    test("if available escape game theaters is wroking ", async () => {
+    test("if available escape game theaters is working ", async () => {
         
         return scrappingService.availableTheatersEscapeGame().then((theaterEscapeGame => {
+       
             expect(theaterEscapeGame.length).toBeGreaterThan(0);
+       
         }));
-    
     });
 })

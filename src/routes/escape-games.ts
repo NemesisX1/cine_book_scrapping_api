@@ -73,7 +73,7 @@ router.get(
   
     */
 
-    const response = await escapeController.getAvailableTheatersEscapeGame(res);
+    const response = await escapeController.getAvailableTheatersEscapeGame(req.query.lang as string, res);
 
     return response;
   }
