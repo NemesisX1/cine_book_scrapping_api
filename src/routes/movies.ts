@@ -50,9 +50,9 @@ router.get(
            }
 
            #swagger.responses[422] = {
-               description: 'Your body was bad formatted',
+               description: 'Your body or query was bad formatted',
                schema: {
-                   message: 'Your body was bad formatted',
+                   message: 'Your body or query was bad formatted',
                    errors: [
                        {
                            type: 'field',
@@ -125,9 +125,9 @@ router.get(
             }
             
             #swagger.responses[422] = {
-                description: 'Your body was bad formatted',
+                description: 'Your body or query was bad formatted',
                 schema: {
-                    message: 'Your body was bad formatted',
+                    message: 'Your body or query was bad formatted',
                     errors: [
                         {
                             type: 'field',
@@ -202,9 +202,9 @@ router.get(
            }
            
            #swagger.responses[422] = {
-               description: 'Your body was bad formatted',
+               description: 'Your body or query was bad formatted',
                schema: {
-                   message: 'Your body was bad formatted',
+                   message: 'Your body or query was bad formatted',
                    errors: [
                        {
                            type: 'field',
@@ -280,9 +280,9 @@ router.get(
           
 
           #swagger.responses[422] = {
-              description: 'Your body was bad formatted',
+              description: 'Your body or query was bad formatted',
               schema: {
-                  message: 'Your body was bad formatted',
+                  message: 'Your body or query was bad formatted',
                   errors: [
                       {
                           type: 'field',

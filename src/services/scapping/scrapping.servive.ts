@@ -434,8 +434,11 @@ export default class ScrappingService implements BaseService {
 
     public async escapeGameByTheaters() {
         let response: AxiosResponse;
+      
         try {
+      
             response = await axios.get(infos.baseUrl);
+      
         } catch (error) {
 
             const e = error as AxiosError;
@@ -451,19 +454,24 @@ export default class ScrappingService implements BaseService {
 
     }
 
-    public async AvailableTheatersEscapeGame(): Promise<TheaterEscapeGameModel[]> {
+    public async availableTheatersEscapeGame(lang: string = 'fr'): Promise<TheaterEscapeGameModel[]> {
+       
         let response: AxiosResponse;
+       
         try {
+        
             response = await axios.get(`${infos.baseUrl}/escape-game/`);
+        
         } catch (error) {
 
             const e = error as AxiosError;
 
-            this.logger.fatal('theatersNames');
+            this.logger.fatal('availableTheatersEscapeGame');
             this.logger.fatal(e);
 
             throw Error(e.message);
         }
+
         const theaterEscapeGame: TheaterEscapeGameModel[] = [];
         const htmlRoot = cheerio.load(response.data);
 
@@ -504,9 +512,7 @@ export default class ScrappingService implements BaseService {
         });
 
         return theaterEscapeGame;
-
     }
-
 }
 
 

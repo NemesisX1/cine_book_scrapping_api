@@ -1,4 +1,4 @@
-# Canal Olympia API Docs
+# Ciné Book API Docs
 
 ## How it works?
 

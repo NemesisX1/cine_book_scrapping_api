@@ -60,12 +60,5 @@ describe('Testing theaters routes', () => {
 
     });
 
-    test('if /GET theaters/escap-game is working ', async () => {
-
-        const res = await reqApp.get('/theaters/escape-game');
-
-        expect(res.statusCode).toBe(200);
-    })
-
 })
 

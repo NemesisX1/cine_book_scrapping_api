@@ -8,12 +8,12 @@ export function ExpressValidatorMiddleware(req: Request, res: Response, next: Ne
     if (!errors.isEmpty()) {
       
         console.log({
-            'message': 'Your body was bad formatted',
+            'message': 'Your body or query was bad formatted',
             ...errors,
         });
         
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(
-            {   'message': 'Your body was bad formatted',
+            {   'message': 'Your body or query was bad formatted',
                 'errors': ({...errors} as any).errors,
             },
         );

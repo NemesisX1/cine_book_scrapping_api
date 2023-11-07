@@ -13,6 +13,7 @@ import helmet from 'helmet';
 import indexRouter from './routes/index';
 import theatersRouter from './routes/theaters';
 import moviesRouter from './routes/movies';
+import escapeGamesRouter from './routes/escape-games';
 
 class App {
   public app: express.Application;
@@ -28,7 +29,7 @@ class App {
 
     this.app.use(statusMonitor(
       {
-        title: 'Canal Olympia API Monitor',
+        title: 'Ciné Book API Monitor',
         path: '/monitor',
         chartVisibility: {
           cpu: false,
@@ -84,6 +85,7 @@ class App {
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     this.app.use('/movies', moviesRouter);
     this.app.use('/theaters', theatersRouter);
+    this.app.use('/escape-games', escapeGamesRouter);
     
   }
 

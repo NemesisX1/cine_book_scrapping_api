@@ -10,7 +10,7 @@ const theatersController = new TheatersController();
 router.get(
   '/names',
 
-  async function (_req, res, _next) {
+  async function (_req, res, _next): Promise<any> {
 
     /*
       #swagger.tags = ['Theaters']
@@ -47,18 +47,6 @@ router.get(
   }
 );
 
-router.get('/escape-game',
-
-    ExpressValidatorMiddleware,
-
-    async function (req, res, _next) {
-        const response = theatersController.getAvailableTheatersEscapeGame(res);
-        return response;
-    }
-
-);
-
-
 
 router.get(
   '/infos/:theaterSlug',
@@ -68,7 +56,7 @@ router.get(
 
   ExpressValidatorMiddleware,
 
-  async function (req, res, _next) {
+  async function (req, res, _next): Promise<any> {
 
     /* 
      #swagger.tags = ['Theaters']
@@ -110,9 +98,9 @@ router.get(
      }
 
      #swagger.responses[422] = {
-        description: 'Your body was bad formatted',
+        description: 'Your body or query was bad formatted',
         schema: {
-          message: 'Your body was bad formatted',
+          message: 'Your body or query was bad formatted',
           errors: [
             {
             type: 'field',

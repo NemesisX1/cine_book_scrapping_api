@@ -7,7 +7,7 @@ config();
 const doc = {
     info: {
         version: '',      // by default: '1.0.0'
-        title: 'Canal Olympia Scrapping REST API',        // by default: 'REST API'
+        title: 'Ciné Book Scrapping REST API',        // by default: 'REST API'
         description: '',  // by default: ''
         license: {
             name: 'MIT Licence',
@@ -95,10 +95,22 @@ const doc = {
                 price: '1500 XOF',
             }],
             media: [{
-                title: 'Canal Olympia',
+                title: 'Ciné Book',
                 link: 'https://example.com',
             }],
-        }
+        },
+
+        TheaterEscapeGame:  {
+            theaterName : 'any' , 
+            name: 'any',
+            img: 'https://example.com',
+            price: 123,
+            groupSizeMin: 123,
+            groupSizeMax: 123,
+            difficulty: 123,
+            description: 'any',
+            minAge: 123,
+        },
 
     },          // by default: empty object (Swagger 2.0)
     components: {}
@@ -114,4 +126,4 @@ swaggerAutogen({ openapi: '3.0.0' })(outputFile, endpointsFiles, {
     ...doc,
     host: process.env.BASE_API_URL,
     url: process.env.BASE_API_URL,
-});
+});1

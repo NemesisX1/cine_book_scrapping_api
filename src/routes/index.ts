@@ -17,7 +17,7 @@ router.get('/', function (_req, res, _next) {
 
   */
   
-    return res.render('index', { title: 'Welcome to the unofficial Canal Olympia API' });
+    return res.render('index', { title: 'Welcome to the unofficial Ciné Book API' });
 });
 
 
