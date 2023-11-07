@@ -12,7 +12,7 @@ describe('Test on Scapping Service', () => {
         const names = await scrappingService.theatersNames();
 
         expect(names.length).toBeGreaterThan(0);
-        
+
         const name = names[0];
         expect(name.country).toBeDefined();
         expect(name.cities.length).toBeGreaterThan(0);
@@ -25,7 +25,7 @@ describe('Test on Scapping Service', () => {
         return scrappingService.theaterMovies('wologuede').then((movies) => {
 
             expect(movies.length).toBeGreaterThan(0);
-            
+
         });
 
     });
@@ -70,7 +70,7 @@ describe('Test on Scapping Service', () => {
     test('if movieInfoBySlug is not working with bad slug', async () => {
 
         return scrappingService.movieInfoBySlug('zkk').then((info) => {
-                        
+
             expect(info).toBeNull();
 
         });
@@ -174,11 +174,11 @@ describe('Test on Scapping Service', () => {
             expect(movies.length).toBeGreaterThan(0);
 
             const movie = movies[0];
-            
+
             expect(movie.title).not.toBeNull();
             expect(movie.slug).toBeDefined();
             expect(movie.img).toBeDefined();
-            
+
         });
 
     });
@@ -190,13 +190,21 @@ describe('Test on Scapping Service', () => {
 
             expect(movies.length).toBeGreaterThan(0);
 
-            const movie = movies[0];   
+            const movie = movies[0];
 
             expect(movie.title).not.toBeNull();
             expect(movie.img).toBeDefined();
             expect(movie.slug).toBeDefined();
-            
+
         });
 
     });
+
+
+    test("if available escape game theaters is wroking ", async () => {
+        return scrappingService.AvailableTheatersEscapeGame().then((theaterEscapeGame => {
+            expect(theaterEscapeGame.length).toBeGreaterThan(0);
+        })
+        );
+    })
 })

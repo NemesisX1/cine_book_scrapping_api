@@ -4,7 +4,7 @@ import request from 'supertest';
 describe('Testing theaters routes', () => {
 
     const reqApp = request(app);
-    
+
     test('if /GET is working', async () => {
 
         const res = await reqApp.get('/');
@@ -27,8 +27,8 @@ describe('Testing theaters routes', () => {
     test('if /GET theaters/infos/ is working', async () => {
 
         const res = await reqApp.get('/theaters/infos/wologuede');
-    
-       
+
+
         expect(res.statusCode).toBe(200);
 
     });
@@ -37,7 +37,7 @@ describe('Testing theaters routes', () => {
     test('if /GET theaters/infos/ with bad theater slug is not working', async () => {
 
         const res = await reqApp.get('/theaters/infos/123');
-        
+
         expect(res.statusCode).not.toBe(200);
 
     });
@@ -45,9 +45,9 @@ describe('Testing theaters routes', () => {
 
     test('if /GET theaters/infos/ with bad lang is not working', async () => {
 
-       const res = await reqApp.get('/theaters/infos/wologuede?lang=zk');
+        const res = await reqApp.get('/theaters/infos/wologuede?lang=zk');
 
-       expect(res.statusCode).not.toBe(200);
+        expect(res.statusCode).not.toBe(200);
 
     });
 
@@ -59,6 +59,13 @@ describe('Testing theaters routes', () => {
         expect(res.statusCode).toBe(200);
 
     });
+
+    test('if /GET theaters/escap-game is working ', async () => {
+
+        const res = await reqApp.get('/theaters/escape-game');
+
+        expect(res.statusCode).toBe(200);
+    })
 
 })
 

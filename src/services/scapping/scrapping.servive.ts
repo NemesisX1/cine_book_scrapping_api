@@ -9,6 +9,7 @@ import TheaterInfosModel from "../../models/theater-info.model";
 import TheaterNameModel from "@/models/theater-name.model";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import * as cheerio from 'cheerio';
+import TheaterEscapeGameModel from "@/models/theater-escape-game.model";
 
 export default class ScrappingService implements BaseService {
 
@@ -429,6 +430,81 @@ export default class ScrappingService implements BaseService {
         };
 
         return theaterInfos;
+    }
+
+    public async escapeGameByTheaters() {
+        let response: AxiosResponse;
+        try {
+            response = await axios.get(infos.baseUrl);
+        } catch (error) {
+
+            const e = error as AxiosError;
+
+            this.logger.fatal('theatersNames');
+            this.logger.fatal(e);
+
+            throw Error(e.message);
+        }
+
+        // escape game by theaters 
+
+
+    }
+
+    public async AvailableTheatersEscapeGame(): Promise<TheaterEscapeGameModel[]> {
+        let response: AxiosResponse;
+        try {
+            response = await axios.get(`${infos.baseUrl}/escape-game/`);
+        } catch (error) {
+
+            const e = error as AxiosError;
+
+            this.logger.fatal('theatersNames');
+            this.logger.fatal(e);
+
+            throw Error(e.message);
+        }
+        const theaterEscapeGame: TheaterEscapeGameModel[] = [];
+        const htmlRoot = cheerio.load(response.data);
+
+        const avalaibleTheatherNames = htmlRoot("ul.theaters li").map((index, element) => htmlRoot(element).data("set") as String);
+
+        avalaibleTheatherNames.each((_, theaterName) => {
+
+            htmlRoot(`article[data-${theaterName}]`).each((index, element) => {
+                const name = htmlRoot(element).children("h1").text();
+
+                const e = htmlRoot(element).children();
+
+                const description = e.find(".info-bloc p").text();
+                const difficulty = e.find("li.full").length;
+                const groupSizeMin = parseInt(e.find(".price").text().match(/Groupe de (\d+)/)?.[1] || "0");
+                const groupSizeMax = parseInt(e.find(".price").text().match(/à (\d+) personnes/)?.[1] || "0");
+                const price = parseInt(e.find(".price").text().match(/Tarif unique (\d+)/)?.[1] || "0")
+                const minAge = parseInt(e.find(".age-info").text().match(/\d+/)?.[0] || "0");
+                const image = e.find("figure img").attr("src");
+
+                theaterEscapeGame.push(
+                    {
+                        theaterName: theaterName as string,
+                        name: name,
+                        img: image!,
+                        price: price,
+                        groupSizeMin: groupSizeMin,
+                        groupSizeMax: groupSizeMax,
+                        difficulty: difficulty,
+                        description: description,
+                        minAge: minAge,
+                    }
+                );
+
+            });
+
+
+        });
+
+        return theaterEscapeGame;
+
     }
 
 }

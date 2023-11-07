@@ -85,7 +85,6 @@ class App {
     this.app.use('/movies', moviesRouter);
     this.app.use('/theaters', theatersRouter);
     
-  
   }
 
   private errorHandler() {
