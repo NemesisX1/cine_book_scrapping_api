@@ -8,7 +8,7 @@ const escapeController = new EscapeGamesController();
 
 
 router.get(
-  '/',
+  '',
 
   query('lang').default('fr').isIn(['fr', 'en']),
 
