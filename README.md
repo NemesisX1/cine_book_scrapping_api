@@ -41,4 +41,4 @@ The core scrapper is made up of this package:
 
 Then go to `localhost:3213` or (localhost:PORT with PORT defined in the .env file)
 
-**Elikem Medehou** [![Twitter Follow](https://img.shields.io/twitter/follow/juniormedehou_?label=Follow&style=social)](https://twitter.com/juniormedehou_)
+**Elikem Medehou** [![Twitter Follow](https://img.shields.io/twitter/follow/elikemmedehou?label=Follow&style=social)](https://twitter.com/elikemmedehou)
